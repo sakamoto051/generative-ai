@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -60,6 +61,14 @@
       border-bottom: 1px solid #f1f5f9;
       font-weight: 600;
       background-color: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      margin-bottom: 0.5rem;
+      font-weight: 600;
     }
 
     .card-body {
@@ -114,8 +123,16 @@
       </a>
       <div class="navbar-nav">
         <!-- Navigation links can go here -->
+        <a href="{{ route('dashboard') }}"
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Dashboard</a>
         <a href="{{ route('production-plans.index') }}"
           style="color: #64748b; text-decoration: none; margin-left: 1rem;">Production Plans</a>
+        <a href="{{ route('products.index') }}"
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Products</a>
+        <a href="{{ route('suppliers.index') }}"
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Suppliers</a>
+        <a href="{{ route('purchase-orders.index') }}"
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Purchase Orders</a>
       </div>
     </nav>
 

@@ -74,8 +74,10 @@
                   </div>
                 </td>
                 <td>
+                  @if($productionPlan->status === 'approved')
                   <a href="{{ route('production-results.create', $item) }}"
                     class="btn btn-sm btn-outline-primary">Report</a>
+                  @endif
                 </td>
               </tr>
               @endforeach

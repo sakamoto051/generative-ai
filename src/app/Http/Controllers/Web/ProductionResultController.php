@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductionResultRequest;
 use App\Models\ProductionPlanItem;
 use App\Models\ProductionResult;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductionResultController extends Controller
 {
@@ -20,36 +22,44 @@ class ProductionResultController extends Controller
   {
     $data = $request->validated();
 
-    // 1. Record Result
-    $result = ProductionResult::create($data);
+    DB::transaction(function () use ($data) {
+      // 1. Record Result
+      // Ensure we don't double dip if we run logic here.
+      $result = ProductionResult::create($data);
 
-    // 2. Deduct Materials from Inventory (Backflush)
-    $item = ProductionPlanItem::with('product.bomItems.childProduct')->find($data['production_plan_item_id']);
+      // 2. Inventory Movements
+      $item = ProductionPlanItem::with('product.bomItems.childProduct')->find($data['production_plan_item_id']);
 
-    if ($data['quantity'] > 0) {
-      $this->deductMaterials($item->product, $data['quantity']);
-    }
+      // Gross Quantity = Good + Defective
+      $grossQty = $data['quantity'] + ($data['defective_quantity'] ?? 0);
 
-    return redirect()->route('production-plans.show', $item->production_plan_id)
-      ->with('success', 'Production result recorded and materials deducted successfully.');
+      if ($grossQty > 0) {
+        // Deduct Materials (consume based on Total Produced)
+        $this->deductMaterials($item->product, $grossQty);
+      }
+
+      // Add Good Quantity to Stock
+      if ($data['quantity'] > 0) {
+        $item->product->increment('current_stock', $data['quantity']);
+      }
+    });
+
+    // Retrieve item again for redirection (or use ID from data)
+    $planId = ProductionPlanItem::find($data['production_plan_item_id'])->production_plan_id;
+
+    return redirect()->route('production-plans.show', $planId)
+      ->with('success', 'Production result recorded. Inventory updated (Materials consumed, Product stocked).');
   }
 
-  private function deductMaterials(\App\Models\Product $product, float $quantityProduced)
+  /**
+   * Deduct materials based on BOM.
+   * Assumes all BOM items are stocked items (no recursive phantom explosion for now).
+   */
+  private function deductMaterials(Product $product, float $quantityProduced)
   {
     foreach ($product->bomItems as $bomItem) {
       $requiredQty = ($quantityProduced * $bomItem->quantity) / $bomItem->yield_rate;
-      $childProduct = $bomItem->childProduct;
-
-      // If child is material/part, deduct stock
-      if (in_array($childProduct->type, ['material', 'part'])) {
-        $childProduct->decrement('current_stock', $requiredQty);
-      }
-      // If child is sub-assembly (product), we might need to explode further or assume it was picked.
-      // For this simplifiction, we assume sub-assemblies are also 'stocked' or we explode them.
-      // Let's explode deeper if it's a 'product' type (Phantom BOM logic)
-      elseif ($childProduct->type === 'product') {
-        $this->deductMaterials($childProduct, $requiredQty);
-      }
+      $bomItem->childProduct->decrement('current_stock', $requiredQty);
     }
   }
 }
