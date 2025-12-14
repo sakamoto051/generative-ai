@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\BomController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductionPlanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +22,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // 材料マスタ
     Route::resource('materials', MaterialController::class);
+
+    // BOMマスタ
+    Route::resource('boms', BomController::class);
+
+    // 設備マスタ
+    Route::resource('equipment', EquipmentController::class);
+
+    // 作業者マスタ
+    Route::resource('workers', WorkerController::class);
+
+    // 生産計画
+    Route::resource('production-plans', ProductionPlanController::class);
 });
 
 Route::middleware('auth')->group(function () {

@@ -7,12 +7,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Models\Material;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MaterialController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * 材料一覧を表示
      *
@@ -78,7 +80,7 @@ class MaterialController extends Controller
     public function store(StoreMaterialRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['created_by'] = auth()->id();
+        $data['created_by'] = auth()->user()->id;
         $data['is_active'] = $request->boolean('is_active', true);
 
         Material::create($data);
@@ -126,7 +128,7 @@ class MaterialController extends Controller
     public function update(UpdateMaterialRequest $request, Material $material): RedirectResponse
     {
         $data = $request->validated();
-        $data['updated_by'] = auth()->id();
+        $data['updated_by'] = auth()->user()->id;
         $data['is_active'] = $request->boolean('is_active', $material->is_active);
 
         $material->update($data);

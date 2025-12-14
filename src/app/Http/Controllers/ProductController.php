@@ -7,12 +7,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * 製品一覧を表示
      *
@@ -69,7 +71,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['created_by'] = auth()->id();
+        $data['created_by'] = auth()->user()->id;
         $data['is_active'] = $request->boolean('is_active', true);
 
         Product::create($data);
@@ -117,7 +119,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
         $data = $request->validated();
-        $data['updated_by'] = auth()->id();
+        $data['updated_by'] = auth()->user()->id;
         $data['is_active'] = $request->boolean('is_active', $product->is_active);
 
         $product->update($data);

@@ -54,13 +54,13 @@
                                         <a href="{{ route('materials.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">材料マスタ</a>
                                         @endcan
                                         @can('boms.view')
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">BOMマスタ</a>
+                                        <a href="{{ route('boms.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">BOMマスタ</a>
                                         @endcan
                                         @can('equipment.view')
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">設備マスタ</a>
+                                        <a href="{{ route('equipment.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">設備マスタ</a>
                                         @endcan
                                         @can('workers.view')
-                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">作業者マスタ</a>
+                                        <a href="{{ route('workers.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">作業者マスタ</a>
                                         @endcan
                                     </div>
                                 </div>
