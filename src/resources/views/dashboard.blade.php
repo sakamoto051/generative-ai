@@ -4,8 +4,8 @@
 <div class="container">
   <div class="row mb-4">
     <div class="col-md-12">
-      <h1>Dashboard</h1>
-      <p class="text-muted">Overview of production and inventory status.</p>
+      <h1>ダッシュボード</h1>
+      <p class="text-muted">生産および在庫状況の概要を表示します。</p>
     </div>
   </div>
 
@@ -14,36 +14,36 @@
     <div class="col-md-3">
       <div class="card bg-primary text-white h-100">
         <div class="card-body">
-          <h5 class="card-title">Active Plans</h5>
+          <h5 class="card-title">進行中の計画</h5>
           <p class="display-6">{{ number_format($activePlansCount) }}</p>
-          <small>In Approval / Approved</small>
+          <small>承認中 / 承認済</small>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card bg-warning text-dark h-100">
         <div class="card-body">
-          <h5 class="card-title">Low Stock Items</h5>
+          <h5 class="card-title">在庫不足品目</h5>
           <p class="display-6">{{ number_format($lowStockCount) }}</p>
-          <small>Below Minimum Level</small>
+          <small>最低在庫数未満</small>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card bg-success text-white h-100">
         <div class="card-body">
-          <h5 class="card-title">Pending Receipt (PO)</h5>
+          <h5 class="card-title">入荷待ち (PO)</h5>
           <p class="display-6">{{ number_format($purchaseOrdersCount) }}</p>
-          <small>Orders Placed</small>
+          <small>発注済件数</small>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card bg-info text-white h-100">
         <div class="card-body">
-          <h5 class="card-title">Incoming Value</h5>
-          <p class="display-6">${{ number_format($pendingReceiptAmount, 0) }}</p>
-          <small>Pending PO Amount</small>
+          <h5 class="card-title">入荷予定金額</h5>
+          <p class="display-6">¥{{ number_format($pendingReceiptAmount, 0) }}</p>
+          <small>発注残金額</small>
         </div>
       </div>
     </div>
@@ -54,18 +54,18 @@
     <div class="col-md-8">
       <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Recent Production Plans</span>
-          <a href="{{ route('production-plans.index') }}" class="btn btn-sm btn-outline-primary">View All</a>
+          <span>最近の生産計画</span>
+          <a href="{{ route('production-plans.index') }}" class="btn btn-sm btn-outline-primary">すべて表示</a>
         </div>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>Plan #</th>
-                  <th>Status</th>
-                  <th>Progress</th>
-                  <th>Period</th>
+                  <th>計画番号</th>
+                  <th>ステータス</th>
+                  <th>進捗</th>
+                  <th>期間</th>
                 </tr>
               </thead>
               <tbody>
@@ -88,12 +88,12 @@
                     <small class="text-muted">{{ number_format($plan->progress, 0) }}%</small>
                   </td>
                   <td>
-                    <small>{{ \Carbon\Carbon::parse($plan->period_start)->format('M d') }} - {{ \Carbon\Carbon::parse($plan->period_end)->format('M d') }}</small>
+                    <small>{{ \Carbon\Carbon::parse($plan->period_start)->format('Y/m/d') }} - {{ \Carbon\Carbon::parse($plan->period_end)->format('m/d') }}</small>
                   </td>
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="4" class="text-center text-muted">No recent plans found.</td>
+                  <td colspan="4" class="text-center text-muted">最近の計画はありません。</td>
                 </tr>
                 @endforelse
               </tbody>
@@ -107,8 +107,8 @@
     <div class="col-md-4">
       <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <span class="text-danger"><i class="bi bi-exclamation-triangle"></i> Low Stock Alerts</span>
-          <a href="{{ route('products.index') }}" class="btn btn-sm btn-outline-secondary">View Inventory</a>
+          <span class="text-danger"><i class="bi bi-exclamation-triangle"></i> 在庫アラート</span>
+          <a href="{{ route('products.index') }}" class="btn btn-sm btn-outline-secondary">在庫一覧</a>
         </div>
         <div class="card-body p-0">
           <ul class="list-group list-group-flush">
@@ -120,12 +120,12 @@
               </div>
               <div class="text-end">
                 <span class="badge bg-danger rounded-pill">{{ $product->current_stock }}</span>
-                <div style="font-size: 0.75rem;">Min: {{ $product->minimum_stock_level }}</div>
+                <div style="font-size: 0.75rem;">基準: {{ $product->minimum_stock_level }}</div>
               </div>
             </li>
             @empty
             <li class="list-group-item text-center text-muted py-3">
-              Inventory levels are healthy.
+              在庫は適正です。
             </li>
             @endforelse
           </ul>
@@ -134,10 +134,10 @@
 
       <div class="d-grid gap-2">
         <a href="{{ route('production-plans.create') }}" class="btn btn-outline-primary">
-          Crete New Production Plan
+          新しい生産計画を作成
         </a>
         <a href="{{ route('purchase-orders.create') }}" class="btn btn-outline-success">
-          Create Purchase Order
+          新規発注作成
         </a>
       </div>
     </div>

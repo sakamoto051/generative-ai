@@ -5,7 +5,7 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">{{ __('Create Supplier') }}</div>
+        <div class="card-header">{{ __('新規取引先登録') }}</div>
 
         <div class="card-body">
           <form method="POST" action="{{ route('suppliers.store') }}">
@@ -13,10 +13,10 @@
 
             <div class="mb-0">
               <button type="submit" class="btn btn-primary">
-                {{ __('Create Supplier') }}
+                {{ __('登録') }}
               </button>
               <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">
-                {{ __('Cancel') }}
+                {{ __('キャンセル') }}
               </a>
             </div>
           </form>

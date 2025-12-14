@@ -5,21 +5,21 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">{{ __('Purchase Orders') }}</div>
+        <div class="card-header">{{ __('発注一覧') }}</div>
 
         <div class="card-body">
-          <a href="{{ route('purchase-orders.create') }}" class="btn btn-primary mb-3">Create New PO</a>
+          <a href="{{ route('purchase-orders.create') }}" class="btn btn-primary mb-3">新規発注作成</a>
 
           <table class="table">
             <thead>
               <tr>
-                <th>PO Number</th>
-                <th>Supplier</th>
-                <th>Status</th>
-                <th>Order Date</th>
-                <th>Delivery Due</th>
-                <th>Total Amount</th>
-                <th>Actions</th>
+                <th>発注番号</th>
+                <th>取引先</th>
+                <th>ステータス</th>
+                <th>発注日</th>
+                <th>納期</th>
+                <th>合計金額</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -28,34 +28,32 @@
                 <td>{{ $po->po_number }}</td>
                 <td>{{ $po->supplier->name }}</td>
                 <td>
-                  @if($po->status === 'draft')
-                  <span class="badge bg-secondary text-dark" style="background-color: #e2e8f0;">{{ ucfirst($po->status) }}</span>
-                  @elseif($po->status === 'ordered')
-                  <span class="badge bg-primary text-white" style="background-color: #3b82f6;">{{ ucfirst($po->status) }}</span>
-                  @elseif($po->status === 'received')
-                  <span class="badge bg-success text-white" style="background-color: #22c55e;">{{ ucfirst($po->status) }}</span>
-                  @else
-                  {{ ucfirst($po->status) }}
-                  @endif
+                  @switch($po->status)
+                  @case('draft') <span class="badge bg-secondary">ドラフト</span> @break
+                  @case('ordered') <span class="badge bg-primary">発注済</span> @break
+                  @case('received') <span class="badge bg-success">受入済</span> @break
+                  @case('cancelled') <span class="badge bg-danger">キャンセル</span> @break
+                  @default {{ $po->status }}
+                  @endswitch
                 </td>
-                <td>{{ $po->order_date->format('Y-m-d') }}</td>
-                <td>{{ $po->delivery_due_date ? $po->delivery_due_date->format('Y-m-d') : '-' }}</td>
-                <td>{{ number_format($po->total_amount, 2) }}</td>
+                <td>{{ $po->order_date->format('Y/m/d') }}</td>
+                <td>{{ $po->delivery_due_date ? $po->delivery_due_date->format('Y/m/d') : '-' }}</td>
+                <td>¥{{ number_format($po->total_amount, 2) }}</td>
                 <td>
-                  <a href="{{ route('purchase-orders.show', $po) }}" class="btn btn-sm btn-info">View</a>
+                  <a href="{{ route('purchase-orders.show', $po) }}" class="btn btn-sm btn-info">詳細</a>
                   @if($po->status === 'draft')
-                  <a href="{{ route('purchase-orders.edit', $po) }}" class="btn btn-sm btn-warning">Edit</a>
-                  <form action="{{ route('purchase-orders.destroy', $po) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this PO?');">
+                  <a href="{{ route('purchase-orders.edit', $po) }}" class="btn btn-sm btn-warning">編集</a>
+                  <form action="{{ route('purchase-orders.destroy', $po) }}" method="POST" class="d-inline" onsubmit="return confirm('本当に削除しますか?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-sm btn-danger">削除</button>
                   </form>
                   @endif
                 </td>
               </tr>
               @empty
               <tr>
-                <td colspan="7">No purchase orders found.</td>
+                <td colspan="7">発注データが見つかりません。</td>
               </tr>
               @endforelse
             </tbody>

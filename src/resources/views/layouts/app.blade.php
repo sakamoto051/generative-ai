@@ -124,15 +124,15 @@
       <div class="navbar-nav">
         <!-- Navigation links can go here -->
         <a href="{{ route('dashboard') }}"
-          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Dashboard</a>
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">ダッシュボード</a>
         <a href="{{ route('production-plans.index') }}"
-          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Production Plans</a>
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">生産計画</a>
         <a href="{{ route('products.index') }}"
-          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Products</a>
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">製品管理</a>
         <a href="{{ route('suppliers.index') }}"
-          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Suppliers</a>
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">取引先</a>
         <a href="{{ route('purchase-orders.index') }}"
-          style="color: #64748b; text-decoration: none; margin-left: 1rem;">Purchase Orders</a>
+          style="color: #64748b; text-decoration: none; margin-left: 1rem;">発注管理</a>
       </div>
     </nav>
 

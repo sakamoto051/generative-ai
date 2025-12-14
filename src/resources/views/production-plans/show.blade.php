@@ -6,52 +6,58 @@
     <div class="col-md-10">
       <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <span>{{ __('Production Plan Details') }}</span>
+          <span>{{ __('生産計画詳細') }}</span>
           <div>
             <span
               class="badge {{ $productionPlan->status === 'approved' ? 'bg-success' : ($productionPlan->status === 'draft' ? 'bg-secondary' : 'bg-warning') }} text-dark border">
-              {{ ucfirst($productionPlan->status) }}
+              @switch($productionPlan->status)
+              @case('draft') ドラフト @break
+              @case('pending_approval') 承認待ち @break
+              @case('approved') 承認済 @break
+              @case('rejected') 却下 @break
+              @default {{ $productionPlan->status }}
+              @endswitch
             </span>
           </div>
         </div>
 
         <div class="card-body">
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Plan Number</div>
+            <div class="col-md-3 fw-bold">計画番号</div>
             <div class="col-md-9">{{ $productionPlan->plan_number }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Period</div>
-            <div class="col-md-9">{{ $productionPlan->period_start }} to {{ $productionPlan->period_end }}</div>
+            <div class="col-md-3 fw-bold">期間</div>
+            <div class="col-md-9">{{ $productionPlan->period_start }} 〜 {{ $productionPlan->period_end }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Creator</div>
+            <div class="col-md-3 fw-bold">作成者</div>
             <div class="col-md-9">{{ $productionPlan->creator->name ?? 'N/A' }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Created At</div>
-            <div class="col-md-9">{{ $productionPlan->created_at->format('Y-m-d H:i') }}</div>
+            <div class="col-md-3 fw-bold">作成日</div>
+            <div class="col-md-9">{{ $productionPlan->created_at->format('Y/m/d H:i') }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Description</div>
-            <div class="col-md-9">{{ $productionPlan->description ?? 'No description provided' }}</div>
+            <div class="col-md-3 fw-bold">説明</div>
+            <div class="col-md-9">{{ $productionPlan->description ?? '説明なし' }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-3 fw-bold">Estimated Cost (Standard)</div>
-            <div class="col-md-9">{{ number_format($estimatedCost, 2) }}</div>
+            <div class="col-md-3 fw-bold">見積原価 (標準)</div>
+            <div class="col-md-9">¥{{ number_format($estimatedCost, 2) }}</div>
           </div>
 
           <hr class="my-4">
-          <h5 class="mb-3">Plan Items (Progress)</h5>
+          <h5 class="mb-3">計画品目 (進捗)</h5>
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Planned Qty</th>
-                <th>Actual Qty</th>
-                <th>Defective</th>
-                <th>Progress</th>
-                <th>Action</th>
+                <th>製品</th>
+                <th>計画数</th>
+                <th>実績数</th>
+                <th>不良数</th>
+                <th>進捗率</th>
+                <th>アクション</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +82,7 @@
                 <td>
                   @if($productionPlan->status === 'approved')
                   <a href="{{ route('production-results.create', $item) }}"
-                    class="btn btn-sm btn-outline-primary">Report</a>
+                    class="btn btn-sm btn-outline-primary">実績報告</a>
                   @endif
                 </td>
               </tr>
@@ -85,19 +91,19 @@
           </table>
 
           <hr class="my-4">
-          <h5 class="mb-3">Material Requirements (Simulation)</h5>
+          <h5 class="mb-3">所要量計算 (シミュレーション)</h5>
           @if($materialRequirements->isEmpty())
-          <div class="alert alert-info">No material requirements calculated.</div>
+          <div class="alert alert-info">必要な原材料はありません。</div>
           @else
           <table class="table table-sm table-striped">
             <thead>
               <tr>
-                <th>Material Code</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Required Qty</th>
-                <th>Unit Cost</th>
-                <th>Total Cost</th>
+                <th>部材コード</th>
+                <th>品名</th>
+                <th>種別</th>
+                <th>必要数量</th>
+                <th>単価</th>
+                <th>合計コスト</th>
               </tr>
             </thead>
             <tbody>
@@ -105,10 +111,17 @@
               <tr>
                 <td>{{ $req['code'] }}</td>
                 <td>{{ $req['name'] }}</td>
-                <td>{{ ucfirst($req['type']) }}</td>
+                <td>
+                  @switch($req['type'])
+                  @case('product') 製品 @break
+                  @case('part') 部品 @break
+                  @case('material') 原材料 @break
+                  @default {{ ucfirst($req['type']) }}
+                  @endswitch
+                </td>
                 <td>{{ number_format($req['total_quantity'], 2) }}</td>
-                <td>{{ number_format($req['unit_cost'], 2) }}</td>
-                <td>{{ number_format($req['total_quantity'] * $req['unit_cost'], 2) }}</td>
+                <td>¥{{ number_format($req['unit_cost'], 2) }}</td>
+                <td>¥{{ number_format($req['total_quantity'] * $req['unit_cost'], 2) }}</td>
               </tr>
               @endforeach
             </tbody>
@@ -119,16 +132,16 @@
             <div class="col-md-4">
               <div class="card bg-light">
                 <div class="card-body py-2">
-                  <small class="text-muted">Total Planned Cost</small>
-                  <h4 class="mb-0">{{ number_format($costData['total_planned_cost'], 2) }}</h4>
+                  <small class="text-muted">計画総コスト</small>
+                  <h4 class="mb-0">¥{{ number_format($costData['total_planned_cost'], 2) }}</h4>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card bg-light">
                 <div class="card-body py-2">
-                  <small class="text-muted">Total Actual Cost</small>
-                  <h4 class="mb-0">{{ number_format($costData['total_actual_cost'], 2) }}</h4>
+                  <small class="text-muted">実績総コスト</small>
+                  <h4 class="mb-0">¥{{ number_format($costData['total_actual_cost'], 2) }}</h4>
                 </div>
               </div>
             </div>
@@ -136,9 +149,8 @@
               <div
                 class="card {{ $costData['total_variance'] >= 0 ? 'bg-success text-white' : 'bg-danger text-white' }}">
                 <div class="card-body py-2">
-                  <small class="{{ $costData['total_variance'] >= 0 ? 'text-white-50' : 'text-white-50' }}">Variance (
-                    Remaining Budget )</small>
-                  <h4 class="mb-0">{{ number_format($costData['total_variance'], 2) }}</h4>
+                  <small class="{{ $costData['total_variance'] >= 0 ? 'text-white-50' : 'text-white-50' }}">差異 (予算残)</small>
+                  <h4 class="mb-0">¥{{ number_format($costData['total_variance'], 2) }}</h4>
                 </div>
               </div>
             </div>
@@ -147,24 +159,24 @@
           <table class="table table-sm table-striped">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Standard Cost</th>
-                <th>Planned Cost (Qty)</th>
-                <th>Actual Cost (Qty)</th>
-                <th>Variance</th>
+                <th>製品</th>
+                <th>標準原価</th>
+                <th>計画コスト (数)</th>
+                <th>実績コスト (数)</th>
+                <th>差異</th>
               </tr>
             </thead>
             <tbody>
               @foreach($costData['items'] as $item)
               <tr>
                 <td>{{ $item['product_name'] }}</td>
-                <td>{{ number_format($item['standard_unit_cost'], 2) }}</td>
-                <td>{{ number_format($item['planned_cost'], 2) }} <small
+                <td>¥{{ number_format($item['standard_unit_cost'], 2) }}</td>
+                <td>¥{{ number_format($item['planned_cost'], 2) }} <small
                     class="text-muted">({{ $item['planned_qty'] }})</small></td>
-                <td>{{ number_format($item['actual_cost'], 2) }} <small
+                <td>¥{{ number_format($item['actual_cost'], 2) }} <small
                     class="text-muted">({{ $item['actual_qty'] }})</small></td>
                 <td class="{{ $item['variance'] < 0 ? 'text-danger fw-bold' : 'text-success' }}">
-                  {{ number_format($item['variance'], 2) }}
+                  ¥{{ number_format($item['variance'], 2) }}
                 </td>
               </tr>
               @endforeach
@@ -172,31 +184,32 @@
           </table>
         </div>
         <div class="card-footer text-end d-flex justify-content-end gap-2">
-          <a href="{{ route('production-plans.index') }}" class="btn btn-secondary me-2">Back to List</a>
+          <a href="{{ route('production-plans.index') }}" class="btn btn-secondary me-2">一覧に戻る</a>
+
           @if($productionPlan->status === 'draft')
-          <a href="{{ route('production-plans.edit', $productionPlan) }}" class="btn btn-warning me-2">Edit</a>
-          <form action="{{ route('production-plans.submit', $productionPlan) }}" method="POST" style="display:inline;">
+          <a href="{{ route('production-plans.edit', $productionPlan) }}" class="btn btn-warning me-2">編集</a>
+          <form action="{{ route('production-plans.submit', $productionPlan) }}" method="POST" style="display:inline;" onsubmit="return confirm('承認申請しますか？');">
             @csrf
-            <button type="submit" class="btn btn-primary">Submit for Approval</button>
+            <button type="submit" class="btn btn-primary">承認申請</button>
           </form>
           @endif
 
           @if($productionPlan->status === 'pending_approval')
-          <form action="{{ route('production-plans.approve', $productionPlan) }}" method="POST" style="display:inline;">
+          <form action="{{ route('production-plans.approve', $productionPlan) }}" method="POST" style="display:inline;" onsubmit="return confirm('承認しますか？');">
             @csrf
-            <button type="submit" class="btn btn-success">Approve</button>
+            <button type="submit" class="btn btn-success">承認</button>
           </form>
-          <form action="{{ route('production-plans.reject', $productionPlan) }}" method="POST" style="display:inline;">
+          <form action="{{ route('production-plans.reject', $productionPlan) }}" method="POST" style="display:inline;" onsubmit="return confirm('却下しますか？');">
             @csrf
-            <button type="submit" class="btn btn-danger">Reject</button>
+            <button type="submit" class="btn btn-danger">却下</button>
           </form>
           @endif
 
           @if($productionPlan->status === 'approved')
           <form action="{{ route('production-plans.generate-po', $productionPlan) }}" method="POST"
-            style="display:inline;">
+            style="display:inline;" onsubmit="return confirm('所要量に基づいて発注書を一括生成しますか？\n（注: 既存の発注とは別に新規作成されます）');">
             @csrf
-            <button type="submit" class="btn btn-info text-white">Generate Purchase Orders</button>
+            <button type="submit" class="btn btn-info text-white">発注書生成</button>
           </form>
           @endif
         </div>

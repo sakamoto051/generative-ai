@@ -5,32 +5,31 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">{{ __('Supplier Details') }}</div>
+        <div class="card-header">{{ __('取引先詳細') }}</div>
 
         <div class="card-body">
           <div class="mb-3">
-            <strong>Code:</strong> {{ $supplier->code }}
+            <strong>コード:</strong> {{ $supplier->code }}
           </div>
           <div class="mb-3">
-            <strong>Name:</strong> {{ $supplier->name }}
+            <strong>会社名:</strong> {{ $supplier->name }}
           </div>
           <div class="mb-3">
-            <strong>Contact Person:</strong> {{ $supplier->contact_person }}
+            <strong>担当者名:</strong> {{ $supplier->contact_person }}
           </div>
           <div class="mb-3">
-            <strong>Email:</strong> {{ $supplier->email }}
+            <strong>メールアドレス:</strong> {{ $supplier->email }}
           </div>
           <div class="mb-3">
-            <strong>Phone:</strong> {{ $supplier->phone }}
+            <strong>電話番号:</strong> {{ $supplier->phone }}
           </div>
           <div class="mb-3">
-            <strong>Address:</strong>
-            <p class="text-muted">{{ $supplier->address }}</p>
+            <strong>住所:</strong> {{ $supplier->address }}
           </div>
 
           <div class="mt-3">
-            <a href="{{ route('suppliers.edit', $supplier) }}" class="btn btn-warning">Edit</a>
-            <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">Back to List</a>
+            <a href="{{ route('suppliers.edit', $supplier) }}" class="btn btn-warning">編集</a>
+            <a href="{{ route('suppliers.index') }}" class="btn btn-secondary">一覧へ戻る</a>
           </div>
         </div>
       </div>
