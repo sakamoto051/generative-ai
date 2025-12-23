@@ -7,7 +7,7 @@
 - [ ] Task: Conductor - User Manual Verification 'User Management Foundation' (Protocol in workflow.md)
 
 ## Phase 2: Product & Material Foundation
-- [ ] Task: Write Tests for `Product` and `Material` models
+- [x] Task: Write Tests for `Product` and `Material` models 5dd5fd0
 - [ ] Task: Create migration and model for `Product`
 - [ ] Task: Create migration and model for `Material`
 - [ ] Task: Conductor - User Manual Verification 'Product & Material Foundation' (Protocol in workflow.md)
