@@ -3,7 +3,7 @@
 ## Phase 1: Product Management API
 - [x] Task: Write Feature Tests for Product CRUD (List, Show, Create, Update, Delete) 169c61d
 - [x] Task: Implement `ProductController` with all CRUD methods 439e3fc
-- [ ] Task: Create `StoreProductRequest` and `UpdateProductRequest` for validation
+- [x] Task: Create `StoreProductRequest` and `UpdateProductRequest` for validation 312f647
 - [x] Task: Register product routes in `routes/api.php` with `CheckRole` protection 439e3fc
 - [ ] Task: Conductor - User Manual Verification 'Product Management API' (Protocol in workflow.md)
 
