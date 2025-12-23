@@ -1,7 +1,7 @@
 # Track Plan: Core Database Schema and Models
 
 ## Phase 1: User Management Foundation
-- [ ] Task: Create migration to add `employee_number`, `role`, and `factory_id` to `users` table
+- [x] Task: Create migration to add `employee_number`, `role`, and `factory_id` to `users` table 579dd6b
 - [ ] Task: Update `User` model with new fillable fields and relationships
 - [ ] Task: Write Tests for `User` model attributes and basic validation
 - [ ] Task: Conductor - User Manual Verification 'User Management Foundation' (Protocol in workflow.md)
