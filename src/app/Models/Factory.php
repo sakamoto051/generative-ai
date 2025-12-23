@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Factory extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+    ];
 }
