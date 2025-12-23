@@ -7,11 +7,11 @@
 - [x] Task: Write Unit Tests for `CheckRole` middleware logic e41b4ce
 - [ ] Task: Conductor - User Manual Verification 'Sanctum and RBAC Foundation' (Protocol in workflow.md)
 
-## Phase 2: Login and Logout API
+## Phase 2: Login and Logout API [checkpoint: 616ec7b]
 - [x] Task: Write Feature Tests for Login API (successful login, failed credentials, role validation) e61d1fd
 - [x] Task: Implement `AuthController` with `login` and `logout` methods 67081b4
 - [x] Task: Register authentication routes in `routes/api.php` 67081b4
-- [ ] Task: Write Feature Tests for Logout API (token revocation) 67081b4
+- [x] Task: Write Feature Tests for Logout API (token revocation) 67081b4
 - [ ] Task: Conductor - User Manual Verification 'Login and Logout API' (Protocol in workflow.md)
 
 ## Phase 3: Route Protection and Seeding
