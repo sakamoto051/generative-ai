@@ -28,4 +28,22 @@ class UserTest extends TestCase
         $user = new User();
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $user->factory());
     }
+
+    public function test_user_can_be_created_with_new_attributes(): void
+    {
+        $userData = [
+            'employee_number' => 'EMP001',
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => 'password',
+            'role_id' => 1,
+            'factory_id' => 1,
+        ];
+
+        $user = new User($userData);
+
+        $this->assertEquals('EMP001', $user->employee_number);
+        $this->assertEquals(1, $user->role_id);
+        $this->assertEquals(1, $user->factory_id);
+    }
 }
