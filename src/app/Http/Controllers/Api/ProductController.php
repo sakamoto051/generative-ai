@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -19,21 +21,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $validated = $request->validate([
-            'product_code' => 'required|unique:products,product_code',
-            'name' => 'required|string',
-            'category' => 'nullable|string',
-            'unit' => 'nullable|string',
-            'standard_cost' => 'nullable|numeric',
-            'standard_manufacturing_time' => 'nullable|numeric',
-            'lead_time' => 'nullable|numeric',
-            'safety_stock' => 'nullable|numeric',
-            'reorder_point' => 'nullable|numeric',
-        ]);
-
-        $product = Product::create($validated);
+        $product = Product::create($request->validated());
 
         return response()->json([
             'message' => 'Product created successfully',
@@ -54,21 +44,9 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $validated = $request->validate([
-            'product_code' => 'sometimes|required|unique:products,product_code,' . $product->id,
-            'name' => 'sometimes|required|string',
-            'category' => 'nullable|string',
-            'unit' => 'nullable|string',
-            'standard_cost' => 'nullable|numeric',
-            'standard_manufacturing_time' => 'nullable|numeric',
-            'lead_time' => 'nullable|numeric',
-            'safety_stock' => 'nullable|numeric',
-            'reorder_point' => 'nullable|numeric',
-        ]);
-
-        $product->update($validated);
+        $product->update($request->validated());
 
         return response()->json([
             'message' => 'Product updated successfully',
