@@ -38,9 +38,9 @@ class User extends Authenticatable
     /**
      * Get the factory associated with the user.
      */
-    public function factory()
+    public function affiliatedFactory()
     {
-        return $this->belongsTo(Factory::class);
+        return $this->belongsTo(Factory::class, 'factory_id');
     }
 
     /**

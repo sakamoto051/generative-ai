@@ -24,11 +24,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'employee_number' => fake()->unique()->bothify('EMP#####'),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role_id' => \App\Models\Role::first()?->id ?? \App\Models\Role::factory(),
+            'factory_id' => \App\Models\Factory::first()?->id ?? \App\Models\Factory::factory(),
         ];
     }
 

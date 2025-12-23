@@ -26,7 +26,7 @@ class UserTest extends TestCase
     public function test_user_has_factory_relationship(): void
     {
         $user = new User();
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $user->factory());
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\BelongsTo::class, $user->affiliatedFactory());
     }
 
     public function test_user_can_be_created_with_new_attributes(): void
