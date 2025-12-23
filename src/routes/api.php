@@ -31,4 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['role:Cost Accountant'])->get('/accounting/reports', function () {
         return response()->json(['message' => 'Financial Reports and Cost Analysis']);
     });
+
+    // Product routes
+    Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
 });
