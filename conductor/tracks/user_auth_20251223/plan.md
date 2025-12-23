@@ -4,7 +4,7 @@
 - [x] Task: Install and configure Laravel Sanctum 6129d11
 - [x] Task: Create and run migration for the `roles` table (including seed data) 3f103d4
 - [x] Task: Create `CheckRole` middleware to enforce RBAC 6fefe19
-- [ ] Task: Write Unit Tests for `CheckRole` middleware logic
+- [x] Task: Write Unit Tests for `CheckRole` middleware logic e41b4ce
 - [ ] Task: Conductor - User Manual Verification 'Sanctum and RBAC Foundation' (Protocol in workflow.md)
 
 ## Phase 2: Login and Logout API
