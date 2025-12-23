@@ -13,7 +13,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Product & Material Foundation' (Protocol in workflow.md)
 
 ## Phase 3: BOM Structure
-- [ ] Task: Write Tests for `Bom` model relationships (recursive/polymorphic)
+- [x] Task: Write Tests for `Bom` model relationships (recursive/polymorphic) d90a793
 - [ ] Task: Create migration and model for `Bom`
 - [ ] Task: Implement relationships between `Product`, `Material`, and `Bom`
 - [ ] Task: Conductor - User Manual Verification 'BOM Structure' (Protocol in workflow.md)
