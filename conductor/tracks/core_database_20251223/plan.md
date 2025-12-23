@@ -12,7 +12,7 @@
 - [x] Task: Create migration and model for `Material` ef3e4f4
 - [ ] Task: Conductor - User Manual Verification 'Product & Material Foundation' (Protocol in workflow.md)
 
-## Phase 3: BOM Structure
+## Phase 3: BOM Structure [checkpoint: b14bfa8]
 - [x] Task: Write Tests for `Bom` model relationships (recursive/polymorphic) d90a793
 - [x] Task: Create migration and model for `Bom` 9ae411b
 - [x] Task: Implement relationships between `Product`, `Material`, and `Bom` 3a9b76e
