@@ -18,10 +18,29 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'employee_number',
         'name',
         'email',
         'password',
+        'role_id',
+        'factory_id',
     ];
+
+    /**
+     * Get the role associated with the user.
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the factory associated with the user.
+     */
+    public function factory()
+    {
+        return $this->belongsTo(Factory::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
