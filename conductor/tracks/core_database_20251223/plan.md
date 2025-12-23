@@ -6,7 +6,7 @@
 - [x] Task: Write Tests for `User` model attributes and basic validation 8b102fe
 - [ ] Task: Conductor - User Manual Verification 'User Management Foundation' (Protocol in workflow.md)
 
-## Phase 2: Product & Material Foundation
+## Phase 2: Product & Material Foundation [checkpoint: 07c2ac4]
 - [x] Task: Write Tests for `Product` and `Material` models 5dd5fd0
 - [x] Task: Create migration and model for `Product` 984f90a
 - [x] Task: Create migration and model for `Material` ef3e4f4
