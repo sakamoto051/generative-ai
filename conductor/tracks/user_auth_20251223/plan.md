@@ -8,7 +8,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Sanctum and RBAC Foundation' (Protocol in workflow.md)
 
 ## Phase 2: Login and Logout API
-- [ ] Task: Write Feature Tests for Login API (successful login, failed credentials, role validation)
+- [x] Task: Write Feature Tests for Login API (successful login, failed credentials, role validation) e61d1fd
 - [ ] Task: Implement `AuthController` with `login` and `logout` methods
 - [ ] Task: Register authentication routes in `routes/api.php`
 - [ ] Task: Write Feature Tests for Logout API (token revocation)
