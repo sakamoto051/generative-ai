@@ -3,7 +3,7 @@
 ## Phase 1: User Management Foundation
 - [x] Task: Create migration to add `employee_number`, `role`, and `factory_id` to `users` table 579dd6b
 - [x] Task: Update `User` model with new fillable fields and relationships 2269acc
-- [ ] Task: Write Tests for `User` model attributes and basic validation
+- [x] Task: Write Tests for `User` model attributes and basic validation 8b102fe
 - [ ] Task: Conductor - User Manual Verification 'User Management Foundation' (Protocol in workflow.md)
 
 ## Phase 2: Product & Material Foundation
