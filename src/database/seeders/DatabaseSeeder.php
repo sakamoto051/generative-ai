@@ -17,11 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            UserSeeder::class,
         ]);
 
-        $factory = \App\Models\Factory::create([
-            'name' => 'Main Factory',
-        ]);
+        $factory = \App\Models\Factory::first();
 
         User::factory()->create([
             'name' => 'Test User',
