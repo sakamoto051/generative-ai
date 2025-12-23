@@ -1,6 +1,6 @@
 # Track Plan: Core Database Schema and Models
 
-## Phase 1: User Management Foundation
+## Phase 1: User Management Foundation [checkpoint: 1900720]
 - [x] Task: Create migration to add `employee_number`, `role`, and `factory_id` to `users` table 579dd6b
 - [x] Task: Update `User` model with new fillable fields and relationships 2269acc
 - [x] Task: Write Tests for `User` model attributes and basic validation 8b102fe
