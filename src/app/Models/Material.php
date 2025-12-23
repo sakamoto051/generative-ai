@@ -23,4 +23,20 @@ class Material extends Model
         'is_lot_managed',
         'has_expiry_management',
     ];
+
+    /**
+     * Get the BOM entries where this material is the parent (rare, for semi-finished).
+     */
+    public function components()
+    {
+        return $this->morphMany(Bom::class, 'parent');
+    }
+
+    /**
+     * Get the BOM entries where this material is used as a child (usages).
+     */
+    public function usages()
+    {
+        return $this->morphMany(Bom::class, 'child');
+    }
 }

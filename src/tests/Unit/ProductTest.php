@@ -25,4 +25,16 @@ class ProductTest extends TestCase
         $this->assertContains('safety_stock', $fillable);
         $this->assertContains('reorder_point', $fillable);
     }
+
+    public function test_product_has_components_relationship(): void
+    {
+        $product = new Product();
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $product->components());
+    }
+
+    public function test_product_has_usages_relationship(): void
+    {
+        $product = new Product();
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $product->usages());
+    }
 }

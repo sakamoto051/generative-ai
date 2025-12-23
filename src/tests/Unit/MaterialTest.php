@@ -26,4 +26,16 @@ class MaterialTest extends TestCase
         $this->assertContains('is_lot_managed', $fillable);
         $this->assertContains('has_expiry_management', $fillable);
     }
+
+    public function test_material_has_usages_relationship(): void
+    {
+        $material = new Material();
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $material->usages());
+    }
+
+    public function test_material_has_components_relationship(): void
+    {
+        $material = new Material();
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $material->components());
+    }
 }
