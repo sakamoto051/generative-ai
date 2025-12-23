@@ -16,6 +16,6 @@
 
 ## Phase 3: Route Protection and Seeding
 - [x] Task: Apply `auth:sanctum` and `CheckRole` middleware to example protected routes 83c9cb9
-- [~] Task: Create `UserSeeder` to populate test users for each role
-- [ ] Task: Write Integration Tests to verify end-to-end flow (Login -> Protected Route Access)
+- [x] Task: Create `UserSeeder` to populate test users for each role 0e38f1a
+- [~] Task: Write Integration Tests to verify end-to-end flow (Login -> Protected Route Access)
 - [ ] Task: Conductor - User Manual Verification 'Route Protection and Seeding' (Protocol in workflow.md)
