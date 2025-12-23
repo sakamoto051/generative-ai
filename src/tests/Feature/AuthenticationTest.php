@@ -69,4 +69,24 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure(['token']);
     }
+
+    public function test_user_can_logout(): void
+    {
+        $role = Role::create(['name' => 'User']);
+        $factory = Factory::create(['name' => 'Test Factory']);
+        $user = User::factory()->create([
+            'role_id' => $role->id,
+            'factory_id' => $factory->id,
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/logout');
+
+        $response->assertStatus(200)
+            ->assertJson(['message' => 'Logged out successfully']);
+
+        $this->assertCount(0, $user->tokens);
+    }
 }
