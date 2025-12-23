@@ -15,5 +15,5 @@
 ## Phase 3: BOM Structure
 - [x] Task: Write Tests for `Bom` model relationships (recursive/polymorphic) d90a793
 - [x] Task: Create migration and model for `Bom` 9ae411b
-- [ ] Task: Implement relationships between `Product`, `Material`, and `Bom`
+- [x] Task: Implement relationships between `Product`, `Material`, and `Bom` 3a9b76e
 - [ ] Task: Conductor - User Manual Verification 'BOM Structure' (Protocol in workflow.md)
