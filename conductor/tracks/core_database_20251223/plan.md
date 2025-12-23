@@ -9,7 +9,7 @@
 ## Phase 2: Product & Material Foundation
 - [x] Task: Write Tests for `Product` and `Material` models 5dd5fd0
 - [x] Task: Create migration and model for `Product` 984f90a
-- [ ] Task: Create migration and model for `Material`
+- [x] Task: Create migration and model for `Material` ef3e4f4
 - [ ] Task: Conductor - User Manual Verification 'Product & Material Foundation' (Protocol in workflow.md)
 
 ## Phase 3: BOM Structure
