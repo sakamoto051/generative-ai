@@ -5,6 +5,7 @@
 - **Framework:** Laravel 12.x
 - **Key Packages:**
   - `linecorp/line-bot-sdk`: LINE Bot integration.
+  - `laravel/sanctum`: API token-based authentication.
   - `phpoffice/phpspreadsheet`: Excel and Spreadsheet processing.
   - `larastan/larastan`: Static analysis for Laravel.
   - `laravel/pint`: Code style/formatting.
