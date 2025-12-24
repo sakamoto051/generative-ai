@@ -2,7 +2,7 @@
 
 ## Phase 1: BOM Relationship CRUD
 - [x] Task: Write Feature Tests for BOM CRUD (Create, Update, Delete) 4b1ca81
-- [ ] Task: Create `StoreBomRequest` and `UpdateBomRequest` with basic validation
+- [x] Task: Create `StoreBomRequest` and `UpdateBomRequest` with basic validation 9cec904
 - [ ] Task: Implement `BomController` for standard CRUD operations
 - [ ] Task: Register BOM routes in `routes/api.php` with role protection
 - [ ] Task: Conductor - User Manual Verification 'BOM Relationship CRUD' (Protocol in workflow.md)
