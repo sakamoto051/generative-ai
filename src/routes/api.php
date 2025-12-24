@@ -51,4 +51,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
     Route::get('/materials', [\App\Http\Controllers\Api\MaterialController::class, 'index']);
     Route::get('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'show']);
+
+    // BOM routes
+    Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader'])->group(function () {
+        Route::post('/boms', [\App\Http\Controllers\Api\BomController::class, 'store']);
+        Route::put('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'update']);
+        Route::patch('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'update']);
+        Route::delete('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'destroy']);
+    });
+
+    Route::get('/boms', [\App\Http\Controllers\Api\BomController::class, 'index']);
+    Route::get('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'show']);
 });
