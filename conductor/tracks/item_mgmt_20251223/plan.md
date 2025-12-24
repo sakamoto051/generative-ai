@@ -9,9 +9,9 @@
 
 ## Phase 2: Material Management API
 - [x] Task: Write Feature Tests for Material CRUD (List, Show, Create, Update, Delete) 2fa5d26
-- [ ] Task: Implement `MaterialController` with all CRUD methods
+- [x] Task: Implement `MaterialController` with all CRUD methods 15604d9
 - [ ] Task: Create `StoreMaterialRequest` and `UpdateMaterialRequest` for validation
-- [ ] Task: Register material routes in `routes/api.php` with `CheckRole` protection
+- [x] Task: Register material routes in `routes/api.php` with `CheckRole` protection 15604d9
 - [ ] Task: Conductor - User Manual Verification 'Material Management API' (Protocol in workflow.md)
 
 ## Phase 3: Authorization and Consistency
