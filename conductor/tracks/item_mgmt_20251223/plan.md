@@ -15,6 +15,6 @@
 - [ ] Task: Conductor - User Manual Verification 'Material Management API' (Protocol in workflow.md)
 
 ## Phase 3: Authorization and Consistency
-- [ ] Task: Write Integration Tests to verify RBAC across all new item endpoints
+- [x] Task: Write Integration Tests to verify RBAC across all new item endpoints 94cfe20
 - [ ] Task: Ensure consistent JSON response format for all CRUD operations
 - [ ] Task: Conductor - User Manual Verification 'Authorization and Consistency' (Protocol in workflow.md)
