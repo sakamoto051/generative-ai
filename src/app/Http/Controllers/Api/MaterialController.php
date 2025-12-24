@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMaterialRequest;
+use App\Http\Requests\UpdateMaterialRequest;
 use App\Models\Material;
 use Illuminate\Http\Request;
 
@@ -19,22 +21,9 @@ class MaterialController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreMaterialRequest $request)
     {
-        $validated = $request->validate([
-            'material_code' => 'required|unique:materials,material_code',
-            'name' => 'required|string',
-            'category' => 'nullable|string',
-            'unit' => 'nullable|string',
-            'standard_price' => 'nullable|numeric',
-            'lead_time' => 'nullable|numeric',
-            'minimum_order_quantity' => 'nullable|numeric',
-            'safety_stock' => 'nullable|numeric',
-            'is_lot_managed' => 'nullable|boolean',
-            'has_expiry_management' => 'nullable|boolean',
-        ]);
-
-        $material = Material::create($validated);
+        $material = Material::create($request->validated());
 
         return response()->json([
             'message' => 'Material created successfully',
@@ -55,22 +44,9 @@ class MaterialController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Material $material)
+    public function update(UpdateMaterialRequest $request, Material $material)
     {
-        $validated = $request->validate([
-            'material_code' => 'sometimes|required|unique:materials,material_code,' . $material->id,
-            'name' => 'sometimes|required|string',
-            'category' => 'nullable|string',
-            'unit' => 'nullable|string',
-            'standard_price' => 'nullable|numeric',
-            'lead_time' => 'nullable|numeric',
-            'minimum_order_quantity' => 'nullable|numeric',
-            'safety_stock' => 'nullable|numeric',
-            'is_lot_managed' => 'nullable|boolean',
-            'has_expiry_management' => 'nullable|boolean',
-        ]);
-
-        $material->update($validated);
+        $material->update($request->validated());
 
         return response()->json([
             'message' => 'Material updated successfully',
