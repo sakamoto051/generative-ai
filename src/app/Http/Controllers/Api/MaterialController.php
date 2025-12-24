@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
+use App\Http\Resources\MaterialResource;
 use App\Models\Material;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        return Material::paginate(20);
+        return MaterialResource::collection(Material::paginate(20));
     }
 
     /**
@@ -25,10 +26,10 @@ class MaterialController extends Controller
     {
         $material = Material::create($request->validated());
 
-        return response()->json([
-            'message' => 'Material created successfully',
-            'data' => $material
-        ], 201);
+        return (new MaterialResource($material))
+            ->additional(['message' => 'Material created successfully'])
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -36,9 +37,7 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
-        return response()->json([
-            'data' => $material
-        ]);
+        return new MaterialResource($material);
     }
 
     /**
@@ -48,10 +47,8 @@ class MaterialController extends Controller
     {
         $material->update($request->validated());
 
-        return response()->json([
-            'message' => 'Material updated successfully',
-            'data' => $material
-        ]);
+        return (new MaterialResource($material))
+            ->additional(['message' => 'Material updated successfully']);
     }
 
     /**

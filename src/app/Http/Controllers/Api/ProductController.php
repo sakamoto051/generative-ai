@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::paginate(20);
+        return ProductResource::collection(Product::paginate(20));
     }
 
     /**
@@ -25,10 +26,10 @@ class ProductController extends Controller
     {
         $product = Product::create($request->validated());
 
-        return response()->json([
-            'message' => 'Product created successfully',
-            'data' => $product
-        ], 201);
+        return (new ProductResource($product))
+            ->additional(['message' => 'Product created successfully'])
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -36,9 +37,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return response()->json([
-            'data' => $product
-        ]);
+        return new ProductResource($product);
     }
 
     /**
@@ -48,10 +47,8 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'data' => $product
-        ]);
+        return (new ProductResource($product))
+            ->additional(['message' => 'Product updated successfully']);
     }
 
     /**
