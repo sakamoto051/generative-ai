@@ -1,0 +1,8 @@
+{
+  "track_id": "bom_mgmt_20251223",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2025-12-23T17:00:00Z",
+  "updated_at": "2025-12-23T17:00:00Z",
+  "description": "Implement Bill of Materials (BOM) Management API endpoints, including CRUD, recursive expansion, and circular reference validation."
+}
