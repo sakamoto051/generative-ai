@@ -34,4 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Product routes
     Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
+
+    // Material routes
+    Route::apiResource('materials', \App\Http\Controllers\Api\MaterialController::class);
 });
