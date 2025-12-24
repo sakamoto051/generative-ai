@@ -51,6 +51,32 @@ class CheckRoleMiddlewareTest extends TestCase
         $this->assertEquals('OK', $response->getContent());
     }
 
+    public function test_user_with_one_of_allowed_roles_can_access_route(): void
+    {
+        $role = Role::create(['name' => 'Planner']);
+        $factory = \App\Models\Factory::create(['name' => 'Test Factory']);
+        $user = new User([
+            'name' => 'Test User', 
+            'email' => 'test@example.com', 
+            'password' => 'password',
+            'employee_number' => 'EMP004',
+            'factory_id' => $factory->id
+        ]);
+        $user->role()->associate($role);
+        $user->save();
+
+        $request = Request::create('/test', 'GET');
+        $request->setUserResolver(fn () => $user);
+
+        $middleware = new CheckRole();
+
+        $response = $middleware->handle($request, function ($req) {
+            return new Response('OK');
+        }, 'Admin', 'Planner');
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
     public function test_user_with_incorrect_role_cannot_access_route(): void
     {
         // Create roles

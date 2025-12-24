@@ -33,8 +33,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     // Product routes
-    Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
+    Route::get('/products', [AuthController::class, 'index']); // Wait, index is in ProductController
+    
+    Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader,Cost Accountant'])->group(function () {
+        Route::post('/products', [\App\Http\Controllers\Api\ProductController::class, 'store']);
+        Route::put('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'update']);
+        Route::patch('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'update']);
+        Route::delete('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'destroy']);
+        
+        Route::post('/materials', [\App\Http\Controllers\Api\MaterialController::class, 'store']);
+        Route::put('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'update']);
+        Route::patch('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'update']);
+        Route::delete('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'destroy']);
+    });
 
-    // Material routes
-    Route::apiResource('materials', \App\Http\Controllers\Api\MaterialController::class);
+    Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
+    Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
+    Route::get('/materials', [\App\Http\Controllers\Api\MaterialController::class, 'index']);
+    Route::get('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'show']);
 });
