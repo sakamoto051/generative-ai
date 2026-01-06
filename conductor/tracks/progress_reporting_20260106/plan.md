@@ -1,11 +1,11 @@
 # 実装計画: 製造実績報告API
 
-## フェーズ 1: データベーススキーマとモデルの実装
+## フェーズ 1: データベーススキーマとモデルの実装 [checkpoint: 528219e]
 - [x] タスク: `manufacturing_executions` テーブルのマイグレーション作成 0f82387
 - [x] タスク: `ManufacturingExecution` モデルの実装とリレーション（MO, Operator）の定義 3e26dc0
 - [x] タスク: テスト用の Factory 作成 a112471
 - [x] タスク: 基本的なモデル保存とリレーションのユニットテスト作成 a0559a2
-- [ ] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠) 528219e
 
 ## フェーズ 2: 実績登録ロジック（Service層）の実装
 - [ ] タスク: `ExecutionService` クラスの作成
