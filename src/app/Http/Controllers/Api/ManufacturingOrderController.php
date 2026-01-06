@@ -66,4 +66,21 @@ class ManufacturingOrderController extends Controller
 
         return MoResource::collection(collect($orders)->load(['product', 'components.item']));
     }
+
+    /**
+     * Update the status of a manufacturing order.
+     */
+    public function updateStatus(Request $request, ManufacturingOrder $manufacturingOrder)
+    {
+        $validated = $request->validate([
+            'status' => 'required|string|in:Released,In Progress,Completed,Canceled',
+        ]);
+
+        try {
+            $updatedOrder = $this->moService->updateStatus($manufacturingOrder, $validated['status']);
+            return new MoResource($updatedOrder->load(['product', 'components.item']));
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    }
 }

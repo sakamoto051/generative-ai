@@ -63,4 +63,28 @@ class MoService
 
         return sprintf('MO-%s-%04d', $date, $nextNumber);
     }
+
+    /**
+     * Validate and update MO status.
+     */
+    public function updateStatus(ManufacturingOrder $mo, string $newStatus): ManufacturingOrder
+    {
+        $currentStatus = $mo->status;
+
+        $allowedTransitions = [
+            'Planned' => ['Released', 'Canceled'],
+            'Released' => ['In Progress', 'Canceled'],
+            'In Progress' => ['Completed', 'Canceled'],
+            'Completed' => [],
+            'Canceled' => [],
+        ];
+
+        if (! in_array($newStatus, $allowedTransitions[$currentStatus] ?? [])) {
+            throw new \InvalidArgumentException("Invalid status transition from {$currentStatus} to {$newStatus}");
+        }
+
+        $mo->update(['status' => $newStatus]);
+
+        return $mo;
+    }
 }

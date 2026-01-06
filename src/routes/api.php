@@ -64,6 +64,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/boms', [\App\Http\Controllers\Api\BomController::class, 'index']);
     Route::get('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'show']);
 
+    // Manufacturing Order routes
+    Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader'])->group(function () {
+        Route::patch('manufacturing-orders/{manufacturing_order}/status', [\App\Http\Controllers\Api\ManufacturingOrderController::class, 'updateStatus']);
+        Route::apiResource('manufacturing-orders', \App\Http\Controllers\Api\ManufacturingOrderController::class)->only(['index', 'show']);
+    });
+
     // Production Plan routes
     Route::middleware(['role:System Administrator,Production Manager'])->group(function () {
         Route::post('production-plans/{production_plan}/release', [\App\Http\Controllers\Api\ManufacturingOrderController::class, 'release']);
