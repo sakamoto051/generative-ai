@@ -83,4 +83,38 @@ class ProductionPlanController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function submit(ProductionPlan $productionPlan)
+    {
+        return $this->updateStatus($productionPlan, 'Draft', 'Pending');
+    }
+
+    public function approve(ProductionPlan $productionPlan)
+    {
+        return $this->updateStatus($productionPlan, 'Pending', 'Approved');
+    }
+
+    public function reject(ProductionPlan $productionPlan)
+    {
+        return $this->updateStatus($productionPlan, 'Pending', 'Rejected');
+    }
+
+    public function cancel(ProductionPlan $productionPlan)
+    {
+        $productionPlan->update(['status' => 'Canceled']);
+        return new ProductionPlanResource($productionPlan->load('details.product'));
+    }
+
+    protected function updateStatus(ProductionPlan $plan, string $fromStatus, string $toStatus)
+    {
+        if ($plan->status !== $fromStatus) {
+            return response()->json([
+                'message' => "Invalid status transition from {$plan->status} to {$toStatus}"
+            ], 422);
+        }
+
+        $plan->update(['status' => $toStatus]);
+
+        return new ProductionPlanResource($plan->load('details.product'));
+    }
 }

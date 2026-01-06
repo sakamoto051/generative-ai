@@ -126,4 +126,56 @@ class ProductionPlanControllerTest extends TestCase
         $response->assertStatus(204);
         $this->assertDatabaseMissing('production_plans', ['id' => $plan->id]);
     }
+
+    /** @test */
+    public function it_can_submit_a_production_plan()
+    {
+        $plan = ProductionPlan::factory()->create(['status' => 'Draft']);
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson("/api/production-plans/{$plan->id}/submit");
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('production_plans', ['id' => $plan->id, 'status' => 'Pending']);
+    }
+
+    /** @test */
+    public function it_can_approve_a_production_plan()
+    {
+        $plan = ProductionPlan::factory()->create(['status' => 'Pending']);
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson("/api/production-plans/{$plan->id}/approve");
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('production_plans', ['id' => $plan->id, 'status' => 'Approved']);
+    }
+
+    /** @test */
+    public function it_can_reject_a_production_plan()
+    {
+        $plan = ProductionPlan::factory()->create(['status' => 'Pending']);
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson("/api/production-plans/{$plan->id}/reject");
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('production_plans', ['id' => $plan->id, 'status' => 'Rejected']);
+    }
+
+    /** @test */
+    public function it_can_cancel_a_production_plan()
+    {
+        $plan = ProductionPlan::factory()->create(['status' => 'Draft']);
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson("/api/production-plans/{$plan->id}/cancel");
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('production_plans', ['id' => $plan->id, 'status' => 'Canceled']);
+    }
 }
