@@ -63,4 +63,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/boms', [\App\Http\Controllers\Api\BomController::class, 'index']);
     Route::get('/boms/{bom}', [\App\Http\Controllers\Api\BomController::class, 'show']);
+
+    // Inventory routes
+    Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader'])->group(function () {
+        Route::post('/inventories', [\App\Http\Controllers\Api\InventoryController::class, 'store']);
+    });
 });
