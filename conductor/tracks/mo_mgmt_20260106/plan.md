@@ -14,9 +14,9 @@
 - [x] タスク: 自動採番（MO番号）機能の実装 42c9b9f
 - [x] タスク: Conductor - 手動検証 '製造指示 生成ロジックの実装' (workflow.mdのプロトコルに準拠) 578d1e1
 
-## フェーズ 3: API統合と管理機能の実装
+## フェーズ 3: API統合と管理機能の実装 [checkpoint: d6e2cf7]
 - [x] タスク: `ManufacturingOrderController` および `MoResource` の実装 5f3a385
 - [x] タスク: 生産計画からの発行エンドポイント (`POST /api/production-plans/{id}/release`) の実装 5ec365e
 - [x] タスク: 製造指示の一覧・詳細取得およびステータス更新エンドポイントの実装 1eabc1a
 - [x] タスク: 権限（Production Manager 以上等）とステータス遷移の整合性を確認する機能テスト作成 8bb6906
-- [ ] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠) d6e2cf7
