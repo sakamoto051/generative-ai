@@ -18,5 +18,5 @@
 - [x] タスク: `ManufacturingOrderController` および `MoResource` の実装 5f3a385
 - [x] タスク: 生産計画からの発行エンドポイント (`POST /api/production-plans/{id}/release`) の実装 5ec365e
 - [x] タスク: 製造指示の一覧・詳細取得およびステータス更新エンドポイントの実装 1eabc1a
-- [~] タスク: 権限（Production Manager 以上等）とステータス遷移の整合性を確認する機能テスト作成
+- [x] タスク: 権限（Production Manager 以上等）とステータス遷移の整合性を確認する機能テスト作成 8bb6906
 - [ ] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠)
