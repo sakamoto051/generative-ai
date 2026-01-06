@@ -52,4 +52,12 @@ class ManufacturingOrder extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    /**
+     * Get the executions for the manufacturing order.
+     */
+    public function executions(): HasMany
+    {
+        return $this->hasMany(ManufacturingExecution::class);
+    }
 }
