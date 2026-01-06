@@ -15,9 +15,9 @@
 - [x] Task: Write Unit Tests for polymorphic integrity (Parent must be Product) 43fdf8b
 - [x] Task: Conductor - User Manual Verification 'Circular Reference & Integrity Validation' (Protocol in workflow.md) 4704f7a
 
-## Phase 3: Recursive Tree Expansion
+## Phase 3: Recursive Tree Expansion [checkpoint: e05e763]
 - [x] Task: Implement Recursive BOM Expansion logic in `BomService` or `Product` model b042af7
 - [x] Task: Create `BomTreeResource` for standardized hierarchical output 7fbea78
 - [x] Task: Implement `GET /api/products/{id}/bom-tree` endpoint 7fbea78
 - [x] Task: Write Feature Tests for multi-level tree expansion and quantity calculation 7fbea78
-- [ ] Task: Conductor - User Manual Verification 'Recursive Tree Expansion' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Recursive Tree Expansion' (Protocol in workflow.md) e05e763
