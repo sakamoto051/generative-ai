@@ -1,11 +1,11 @@
 # Track Plan: Bill of Materials (BOM) Management API
 
-## Phase 1: BOM Relationship CRUD
+## Phase 1: BOM Relationship CRUD [checkpoint: bf88561]
 - [x] Task: Write Feature Tests for BOM CRUD (Create, Update, Delete) 4b1ca81
 - [x] Task: Create `StoreBomRequest` and `UpdateBomRequest` with basic validation 9cec904
 - [x] Task: Implement `BomController` for standard CRUD operations 4c64185
 - [x] Task: Register BOM routes in `routes/api.php` with role protection 4c64185
-- [ ] Task: Conductor - User Manual Verification 'BOM Relationship CRUD' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'BOM Relationship CRUD' (Protocol in workflow.md) bf88561
 
 ## Phase 2: Circular Reference & Integrity Validation
 - [ ] Task: Implement Circular Reference check logic (Recursive search)
