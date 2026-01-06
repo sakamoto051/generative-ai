@@ -113,4 +113,43 @@ class MrpServiceTest extends TestCase
         $this->assertNotNull($requirementC);
         $this->assertEquals(18, $requirementC['total_requirement'], 'C total requirement should be based on B net requirement');
     }
+
+    /** @test */
+    public function it_stops_recursion_if_inventory_covers_requirement()
+    {
+        // Setup: A -> B -> C
+        $productA = Product::factory()->create();
+        $productB = Product::factory()->create();
+        $materialC = Material::factory()->create();
+
+        Bom::create([
+            'parent_id' => $productA->id,
+            'parent_type' => Product::class,
+            'child_id' => $productB->id,
+            'child_type' => Product::class,
+            'quantity' => 1,
+        ]);
+
+        Bom::create([
+            'parent_id' => $productB->id,
+            'parent_type' => Product::class,
+            'child_id' => $materialC->id,
+            'child_type' => Material::class,
+            'quantity' => 10,
+        ]);
+
+        // Inventory B: 100 units (covers req of 1)
+        Inventory::create([
+            'item_id' => $productB->id,
+            'item_type' => Product::class,
+            'quantity' => 100,
+        ]);
+
+        $results = $this->mrpService->calculateRequirements($productA->id, 1);
+
+        // Should only have entry for B. C should NOT be present.
+        $this->assertCount(1, $results, 'Should not recurse to C because B requirement is fully covered by inventory');
+        $this->assertEquals($productB->id, $results[0]['item_id']);
+        $this->assertEquals(0, $results[0]['net_requirement']);
+    }
 }
