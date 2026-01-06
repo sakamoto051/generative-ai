@@ -7,12 +7,12 @@
 - [x] タスク: リレーションと基本モデルロジック（ステータス定数、ヘルパー等）のユニットテスト作成 9bbe267
 - [x] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠) f032f19
 
-## フェーズ 2: 生産計画CRUD APIの実装
+## フェーズ 2: 生産計画CRUD APIの実装 [checkpoint: 7404e56]
 - [x] タスク: バリデーション（日付妥当性、ステータス保護等）を含む `StoreProductionPlanRequest` と `UpdateProductionPlanRequest` の作成 6593597
 - [x] タスク: `ProductionPlanController` の基本メソッドの実装 (index, show, store, update, destroy) 4ad45a9
 - [x] タスク: APIレスポンス整形用の `ProductionPlanResource` の実装 4ad45a9
 - [x] タスク: CRUD操作の機能テスト作成 (明細を含む一括作成、バリデーションエラーの確認) 4ad45a9
-- [ ] タスク: Conductor - 手動検証 '生産計画CRUD APIの実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 '生産計画CRUD APIの実装' (workflow.mdのプロトコルに準拠) 7404e56
 
 ## フェーズ 3: ステータス遷移（承認フロー）の実装
 - [ ] タスク: `ProductionPlanController` にステータス遷移用エンドポイントの実装 (submit, approve, reject, cancel)
