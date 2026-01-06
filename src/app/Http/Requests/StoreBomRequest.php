@@ -32,4 +32,31 @@ class StoreBomRequest extends FormRequest
             'valid_until' => 'nullable|date|after_or_equal:valid_from',
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if ($validator->errors()->hasAny(['parent_id', 'child_id', 'child_type'])) {
+                return;
+            }
+
+            $data = $this->all();
+
+            $bomService = app(\App\Services\BomService::class);
+
+            if ($bomService->detectCircularReference(
+                (int) $data['parent_id'],
+                (int) $data['child_id'],
+                $data['child_type']
+            )) {
+                $validator->errors()->add('child_id', 'Circular reference detected. A product cannot contain itself.');
+            }
+        });
+    }
 }

@@ -134,4 +134,33 @@ class BomControllerTest extends TestCase
         $response = $this->getJson('/api/boms');
         $response->assertStatus(401);
     }
+
+    public function test_prevents_circular_reference_creation(): void
+    {
+        $productA = Product::factory()->create();
+        $productB = Product::factory()->create();
+
+        // A -> B
+        Bom::create([
+            'parent_id' => $productA->id,
+            'parent_type' => Product::class,
+            'child_id' => $productB->id,
+            'child_type' => Product::class,
+            'quantity' => 1,
+        ]);
+
+        Sanctum::actingAs($this->admin);
+
+        // Try B -> A
+        $response = $this->postJson('/api/boms', [
+            'parent_id' => $productB->id,
+            'parent_type' => Product::class,
+            'child_id' => $productA->id,
+            'child_type' => Product::class,
+            'quantity' => 1,
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['child_id']); 
+    }
 }
