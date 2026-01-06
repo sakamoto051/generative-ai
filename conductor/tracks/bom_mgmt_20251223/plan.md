@@ -16,8 +16,8 @@
 - [x] Task: Conductor - User Manual Verification 'Circular Reference & Integrity Validation' (Protocol in workflow.md) 4704f7a
 
 ## Phase 3: Recursive Tree Expansion
-- [ ] Task: Implement Recursive BOM Expansion logic in `BomService` or `Product` model
-- [ ] Task: Create `BomTreeResource` for standardized hierarchical output
-- [ ] Task: Implement `GET /api/products/{id}/bom-tree` endpoint
+- [x] Task: Implement Recursive BOM Expansion logic in `BomService` or `Product` model b042af7
+- [~] Task: Create `BomTreeResource` for standardized hierarchical output
+- [~] Task: Implement `GET /api/products/{id}/bom-tree` endpoint
 - [ ] Task: Write Feature Tests for multi-level tree expansion and quantity calculation
 - [ ] Task: Conductor - User Manual Verification 'Recursive Tree Expansion' (Protocol in workflow.md)
