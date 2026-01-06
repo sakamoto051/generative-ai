@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Bom;
 use App\Models\Product;
+use App\Models\Material;
 
 class BomService
 {
@@ -67,5 +68,72 @@ class BomService
         }
 
         return false;
+    }
+
+    /**
+     * Get the fully expanded BOM tree for a product.
+     *
+     * @param int $productId
+     * @param float $multiplier Cumulative quantity multiplier
+     * @param int $depth Current recursion depth
+     * @param int $maxDepth Maximum allowed depth
+     * @return array
+     */
+    public function getBomTree(int $productId, float $multiplier = 1.0, int $depth = 0, int $maxDepth = 10): array
+    {
+        if ($depth > $maxDepth) {
+            return [];
+        }
+
+        $product = Product::find($productId);
+        if (!$product) {
+            return [];
+        }
+
+        $node = [
+            'id' => $product->id,
+            'code' => $product->code,
+            'name' => $product->name,
+            'type' => 'product',
+            'children' => [],
+        ];
+
+        // Fetch children relationships
+        $boms = Bom::where('parent_id', $productId)
+                   ->where('parent_type', Product::class)
+                   ->with('child')
+                   ->get();
+
+        foreach ($boms as $bom) {
+            $child = $bom->child;
+            if (!$child) continue;
+
+            $childQty = $bom->quantity;
+            $cumulativeQty = $multiplier * $childQty;
+
+            if ($bom->child_type === Product::class) {
+                // Recursive call
+                $childNode = $this->getBomTree($child->id, $cumulativeQty, $depth + 1, $maxDepth);
+                
+                if (!empty($childNode)) {
+                    $childNode['quantity'] = $childQty;
+                    $childNode['total_quantity'] = $cumulativeQty;
+                    $node['children'][] = $childNode;
+                }
+            } else {
+                // Material (Leaf node)
+                $node['children'][] = [
+                    'id' => $child->id,
+                    'code' => $child->code,
+                    'name' => $child->name,
+                    'type' => 'material',
+                    'quantity' => $childQty,
+                    'total_quantity' => $cumulativeQty,
+                    'children' => [],
+                ];
+            }
+        }
+
+        return $node;
     }
 }
