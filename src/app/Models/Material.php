@@ -50,4 +50,12 @@ class Material extends Model
     {
         return $this->morphOne(Inventory::class, 'item');
     }
+
+    /**
+     * Get the MO components where this material is used.
+     */
+    public function moUsages()
+    {
+        return $this->morphMany(MoComponent::class, 'item');
+    }
 }

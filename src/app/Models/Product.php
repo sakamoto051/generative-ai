@@ -49,4 +49,20 @@ class Product extends Model
     {
         return $this->morphOne(Inventory::class, 'item');
     }
+
+    /**
+     * Get the manufacturing orders for the product.
+     */
+    public function manufacturingOrders()
+    {
+        return $this->hasMany(ManufacturingOrder::class);
+    }
+
+    /**
+     * Get the MO components where this product is used.
+     */
+    public function moUsages()
+    {
+        return $this->morphMany(MoComponent::class, 'item');
+    }
 }

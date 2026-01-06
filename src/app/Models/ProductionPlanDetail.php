@@ -34,4 +34,12 @@ class ProductionPlanDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Get the manufacturing order associated with the plan detail.
+     */
+    public function manufacturingOrder()
+    {
+        return $this->hasOne(ManufacturingOrder::class, 'production_plan_detail_id');
+    }
 }
