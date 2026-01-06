@@ -14,7 +14,7 @@
 - [x] タスク: Conductor - 手動検証 '実績登録ロジックの実装' (workflow.mdのプロトコルに準拠) bab18ac
 
 ## フェーズ 3: API統合とレスポンス形式の構築
-- [ ] タスク: `ManufacturingOrderController` への `execute` メソッド追加および `ExecutionResource` の作成
-- [ ] タスク: `GET /api/manufacturing-orders/{id}/executions` エンドポイントの実装
+- [x] タスク: `ManufacturingOrderController` への `execute` メソッド追加および `ExecutionResource` の作成 9ad35b9
+- [~] タスク: `GET /api/manufacturing-orders/{id}/executions` エンドポイントの実装
 - [ ] タスク: 権限チェックとステータス連動を網羅した機能テストの作成
 - [ ] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠)
