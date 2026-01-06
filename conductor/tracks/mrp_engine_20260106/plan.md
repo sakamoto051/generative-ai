@@ -15,8 +15,8 @@
 - [x] タスク: `MrpService` への在庫引当ロジックの実装（在庫がある場合は優先使用し、不足分のみ下位展開する） e034202
 - [x] タスク: Conductor - 手動検証 'MRP計算エンジンのコアロジック実装' (workflow.mdのプロトコルに準拠) 3a43719
 
-## フェーズ 3: MRP APIの統合とレスポンス形式の構築
+## フェーズ 3: MRP APIの統合とレスポンス形式の構築 [checkpoint: 8de1d3c]
 - [x] タスク: 階層構造化された出力を提供するための `MrpCalculationResource` の実装 6718c68
 - [x] タスク: `MrpController` を作成し、`POST /api/mrp/calculate` エンドポイントを実装 8286732
 - [x] タスク: MRP全体のフロー（入力: 製品/数量 -> 出力: 正味所要量）の機能テスト作成 8286732
-- [ ] タスク: Conductor - 手動検証 'MRP APIの統合とレスポンス形式の構築' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 'MRP APIの統合とレスポンス形式の構築' (workflow.mdのプロトコルに準拠) 8de1d3c
