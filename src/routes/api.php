@@ -68,4 +68,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader'])->group(function () {
         Route::post('/inventories', [\App\Http\Controllers\Api\InventoryController::class, 'store']);
     });
+
+    // MRP routes
+    Route::middleware(['role:System Administrator,Production Manager,Manufacturing Leader'])->group(function () {
+        Route::post('/mrp/calculate', [\App\Http\Controllers\Api\MrpController::class, 'calculate']);
+    });
 });
