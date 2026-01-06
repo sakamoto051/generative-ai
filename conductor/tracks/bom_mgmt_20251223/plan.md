@@ -10,8 +10,9 @@
 ## Phase 2: Circular Reference & Integrity Validation
 - [x] Task: Implement Circular Reference check logic (Recursive search) 375ba54
 - [x] Task: Add Circular Reference validation to StoreBomRequest 39fd2a6
+- [~] Task: Add Circular Reference validation to `UpdateBomRequest`
 - [x] Task: Write Unit Tests specifically for circular dependency detection 375ba54
-- [ ] Task: Write Unit Tests for polymorphic integrity (Parent must be Product)
+- [x] Task: Write Unit Tests for polymorphic integrity (Parent must be Product) 43fdf8b
 - [ ] Task: Conductor - User Manual Verification 'Circular Reference & Integrity Validation' (Protocol in workflow.md)
 
 ## Phase 3: Recursive Tree Expansion
