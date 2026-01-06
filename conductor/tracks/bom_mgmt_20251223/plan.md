@@ -17,7 +17,7 @@
 
 ## Phase 3: Recursive Tree Expansion
 - [x] Task: Implement Recursive BOM Expansion logic in `BomService` or `Product` model b042af7
-- [~] Task: Create `BomTreeResource` for standardized hierarchical output
-- [~] Task: Implement `GET /api/products/{id}/bom-tree` endpoint
-- [ ] Task: Write Feature Tests for multi-level tree expansion and quantity calculation
+- [x] Task: Create `BomTreeResource` for standardized hierarchical output 7fbea78
+- [x] Task: Implement `GET /api/products/{id}/bom-tree` endpoint 7fbea78
+- [x] Task: Write Feature Tests for multi-level tree expansion and quantity calculation 7fbea78
 - [ ] Task: Conductor - User Manual Verification 'Recursive Tree Expansion' (Protocol in workflow.md)
