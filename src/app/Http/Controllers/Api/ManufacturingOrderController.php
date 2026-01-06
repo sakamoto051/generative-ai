@@ -44,6 +44,14 @@ class ManufacturingOrderController extends Controller
     }
 
     /**
+     * Get the execution history for a manufacturing order.
+     */
+    public function executions(ManufacturingOrder $manufacturingOrder)
+    {
+        return ExecutionResource::collection($manufacturingOrder->executions()->with('operator')->get());
+    }
+
+    /**
      * Report manufacturing progress for an order.
      */
     public function execute(Request $request, ManufacturingOrder $manufacturingOrder)
