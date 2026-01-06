@@ -42,4 +42,12 @@ class Material extends Model
     {
         return $this->morphMany(Bom::class, 'child');
     }
+
+    /**
+     * Get the inventory record for the material.
+     */
+    public function inventory()
+    {
+        return $this->morphOne(Inventory::class, 'item');
+    }
 }

@@ -41,4 +41,12 @@ class Product extends Model
     {
         return $this->morphMany(Bom::class, 'child');
     }
+
+    /**
+     * Get the inventory record for the product.
+     */
+    public function inventory()
+    {
+        return $this->morphOne(Inventory::class, 'item');
+    }
 }
