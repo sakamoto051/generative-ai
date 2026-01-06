@@ -1,0 +1,21 @@
+# 実装計画: 生産計画管理API
+
+## フェーズ 1: データベーススキーマとモデルの実装 [checkpoint: f032f19]
+- [x] タスク: `production_plans` (ヘッダー) と `production_plan_details` (明細) テーブルのマイグレーション作成 a458639
+- [x] タスク: `ProductionPlan` と `ProductionPlanDetail` モデルおよびリレーションの実装 9bbe267
+- [x] タスク: テスト用の Factory 作成 9bbe267
+- [x] タスク: リレーションと基本モデルロジック（ステータス定数、ヘルパー等）のユニットテスト作成 9bbe267
+- [x] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠) f032f19
+
+## フェーズ 2: 生産計画CRUD APIの実装 [checkpoint: 7404e56]
+- [x] タスク: バリデーション（日付妥当性、ステータス保護等）を含む `StoreProductionPlanRequest` と `UpdateProductionPlanRequest` の作成 6593597
+- [x] タスク: `ProductionPlanController` の基本メソッドの実装 (index, show, store, update, destroy) 4ad45a9
+- [x] タスク: APIレスポンス整形用の `ProductionPlanResource` の実装 4ad45a9
+- [x] タスク: CRUD操作の機能テスト作成 (明細を含む一括作成、バリデーションエラーの確認) 4ad45a9
+- [x] タスク: Conductor - 手動検証 '生産計画CRUD APIの実装' (workflow.mdのプロトコルに準拠) 7404e56
+
+## フェーズ 3: ステータス遷移（承認フロー）の実装 [checkpoint: f2144b0]
+- [x] タスク: `ProductionPlanController` にステータス遷移用エンドポイントの実装 (submit, approve, reject, cancel) a9955c0
+- [x] タスク: ロールに基づく操作制限（承認・却下は Production Manager 以上等）のための Policy 実装 9d4ed8c
+- [x] タスク: ステータスワークフローの機能テスト作成 (Draft -> Pending -> Approved 等の遷移確認) a9955c0
+- [x] タスク: Conductor - 手動検証 'ステータス遷移（承認フロー）の実装' (workflow.mdのプロトコルに準拠) f2144b0
