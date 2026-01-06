@@ -16,7 +16,7 @@
 - [x] タスク: Conductor - 手動検証 'MRP計算エンジンのコアロジック実装' (workflow.mdのプロトコルに準拠) 3a43719
 
 ## フェーズ 3: MRP APIの統合とレスポンス形式の構築
-- [ ] タスク: 階層構造化された出力を提供するための `MrpCalculationResource` の実装
-- [ ] タスク: `MrpController` を作成し、`POST /api/mrp/calculate` エンドポイントを実装
+- [x] タスク: 階層構造化された出力を提供するための `MrpCalculationResource` の実装 6718c68
+- [~] タスク: `MrpController` を作成し、`POST /api/mrp/calculate` エンドポイントを実装
 - [ ] タスク: MRP全体のフロー（入力: 製品/数量 -> 出力: 正味所要量）の機能テスト作成
 - [ ] タスク: Conductor - 手動検証 'MRP APIの統合とレスポンス形式の構築' (workflow.mdのプロトコルに準拠)
