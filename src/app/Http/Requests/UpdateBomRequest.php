@@ -48,7 +48,7 @@ class UpdateBomRequest extends FormRequest
 
             // Get the BOM model being updated
             $bom = $this->route('bom');
-            
+
             // Determine effective parent and child (use input or fallback to existing)
             $parentId = $this->input('parent_id', $bom->parent_id);
             $childId = $this->input('child_id', $bom->child_id);

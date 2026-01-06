@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Product;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
@@ -12,7 +12,7 @@ class ProductTest extends TestCase
 
     public function test_product_model_has_expected_fillable_attributes(): void
     {
-        $product = new Product();
+        $product = new Product;
         $fillable = $product->getFillable();
 
         $this->assertContains('product_code', $fillable);
@@ -28,13 +28,13 @@ class ProductTest extends TestCase
 
     public function test_product_has_components_relationship(): void
     {
-        $product = new Product();
+        $product = new Product;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $product->components());
     }
 
     public function test_product_has_usages_relationship(): void
     {
-        $product = new Product();
+        $product = new Product;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $product->usages());
     }
 }

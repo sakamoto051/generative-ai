@@ -3,8 +3,8 @@
 namespace Tests\Unit\Services;
 
 use App\Models\Bom;
-use App\Models\Product;
 use App\Models\Material;
+use App\Models\Product;
 use App\Services\BomService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -18,7 +18,7 @@ class BomServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->bomService = new BomService();
+        $this->bomService = new BomService;
     }
 
     /** @test */
@@ -110,9 +110,9 @@ class BomServiceTest extends TestCase
     {
         // A -> A (Material) - should be false as Material cannot be parent
         $productA = Product::factory()->create();
-        
+
         $isCircular = $this->bomService->detectCircularReference($productA->id, $productA->id, Material::class);
-        
+
         $this->assertFalse($isCircular, 'Should return false for material child even if ID matches parent');
     }
 
@@ -122,7 +122,7 @@ class BomServiceTest extends TestCase
         // A -> B (2x)
         // B -> C (3x)
         // Expected A -> B (2) -> C (2*3 = 6)
-        
+
         $productA = Product::factory()->create(['name' => 'A']);
         $productB = Product::factory()->create(['name' => 'B']);
         $materialC = Material::factory()->create(['name' => 'C']);
@@ -147,7 +147,7 @@ class BomServiceTest extends TestCase
 
         $this->assertEquals($productA->id, $tree['id']);
         $this->assertCount(1, $tree['children']);
-        
+
         $childB = $tree['children'][0];
         $this->assertEquals($productB->id, $childB['id']);
         $this->assertEquals(2, $childB['quantity']);
@@ -157,9 +157,9 @@ class BomServiceTest extends TestCase
         $this->assertEquals($materialC->id, $childC['id']);
         $this->assertEquals(3, $childC['quantity']);
         // cumulative = parent_quantity * this_quantity?
-        // Logic: 
+        // Logic:
         // Level 1 (B): qty 2. Total needed for A: 2.
         // Level 2 (C): qty 3 per B. Total needed for A: 2 * 3 = 6.
-        $this->assertEquals(6, $childC['total_quantity']); 
+        $this->assertEquals(6, $childC['total_quantity']);
     }
 }

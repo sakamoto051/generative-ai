@@ -7,7 +7,6 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -67,6 +66,7 @@ class ProductController extends Controller
     public function bomTree(Product $product, \App\Services\BomService $bomService)
     {
         $tree = $bomService->getBomTree($product->id);
+
         return new \App\Http\Resources\BomTreeResource($tree);
     }
 }

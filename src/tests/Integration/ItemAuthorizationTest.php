@@ -2,30 +2,31 @@
 
 namespace Tests\Integration;
 
-use App\Models\User;
-use App\Models\Role;
 use App\Models\Factory;
-use App\Models\Product;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class ItemAuthorizationTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $factory;
+
     protected $admin;
+
     protected $viewer;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
-        
+
         $this->factory = Factory::create(['name' => 'Main Factory']);
-        
+
         // Admin user (authorized)
         $this->admin = User::factory()->create([
             'role_id' => 1, // System Administrator

@@ -3,20 +3,20 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Bom;
-use App\Models\Product;
-use App\Models\Material;
-use App\Models\User;
 use App\Models\Factory;
-use App\Models\Role;
+use App\Models\Material;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class BomControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $admin;
+
     protected $factory;
 
     protected function setUp(): void
@@ -25,9 +25,9 @@ class BomControllerTest extends TestCase
 
         // Seed roles
         $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
-        
+
         $this->factory = Factory::create(['name' => 'Main Factory']);
-        
+
         $this->admin = User::factory()->create([
             'role_id' => 1, // System Administrator
             'factory_id' => $this->factory->id,
@@ -38,7 +38,7 @@ class BomControllerTest extends TestCase
     {
         $product = Product::factory()->create();
         $material = Material::factory()->create();
-        
+
         Bom::create([
             'parent_id' => $product->id,
             'parent_type' => Product::class,
@@ -86,7 +86,7 @@ class BomControllerTest extends TestCase
     {
         $product = Product::factory()->create();
         $material = Material::factory()->create();
-        
+
         $bom = Bom::create([
             'parent_id' => $product->id,
             'parent_type' => Product::class,
@@ -112,7 +112,7 @@ class BomControllerTest extends TestCase
     {
         $product = Product::factory()->create();
         $material = Material::factory()->create();
-        
+
         $bom = Bom::create([
             'parent_id' => $product->id,
             'parent_type' => Product::class,
@@ -161,7 +161,7 @@ class BomControllerTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['child_id']); 
+            ->assertJsonValidationErrors(['child_id']);
     }
 
     public function test_enforces_parent_must_be_product(): void
@@ -199,15 +199,15 @@ class BomControllerTest extends TestCase
 
         Sanctum::actingAs($this->admin);
 
-        // Try to update the BOM to be B -> A (effectively flipping it, which is weird for update, 
-        // but typically update changes quantity. 
-        // A more realistic circular update: 
+        // Try to update the BOM to be B -> A (effectively flipping it, which is weird for update,
+        // but typically update changes quantity.
+        // A more realistic circular update:
         // Existing: A -> B.
         // Existing: B -> C.
         // Update B -> C to be B -> A.
-        
+
         $productC = Product::factory()->create();
-        
+
         // B -> C
         $bomToUpdate = Bom::create([
             'parent_id' => $productB->id,

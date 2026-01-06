@@ -7,7 +7,6 @@ use App\Http\Requests\StoreBomRequest;
 use App\Http\Requests\UpdateBomRequest;
 use App\Http\Resources\BomResource;
 use App\Models\Bom;
-use Illuminate\Http\Request;
 
 class BomController extends Controller
 {

@@ -2,19 +2,19 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Material;
-use App\Models\Role;
-use App\Models\User;
 use App\Models\Factory;
+use App\Models\Material;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class MaterialControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $admin;
+
     protected $factory;
 
     protected function setUp(): void
@@ -23,9 +23,9 @@ class MaterialControllerTest extends TestCase
 
         // Seed roles
         $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
-        
+
         $this->factory = Factory::create(['name' => 'Main Factory']);
-        
+
         $this->admin = User::factory()->create([
             'role_id' => 1, // System Administrator
             'factory_id' => $this->factory->id,
@@ -82,7 +82,7 @@ class MaterialControllerTest extends TestCase
     public function test_cannot_create_material_with_duplicate_code(): void
     {
         Material::factory()->create(['material_code' => 'DUP-MAT']);
-        
+
         Sanctum::actingAs($this->admin);
 
         $data = [

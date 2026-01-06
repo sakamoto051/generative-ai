@@ -2,19 +2,19 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\Product;
-use App\Models\Role;
-use App\Models\User;
 use App\Models\Factory;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class ProductControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $admin;
+
     protected $factory;
 
     protected function setUp(): void
@@ -23,9 +23,9 @@ class ProductControllerTest extends TestCase
 
         // Seed roles
         $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
-        
+
         $this->factory = Factory::create(['name' => 'Main Factory']);
-        
+
         $this->admin = User::factory()->create([
             'role_id' => 1, // System Administrator
             'factory_id' => $this->factory->id,
@@ -81,7 +81,7 @@ class ProductControllerTest extends TestCase
     public function test_cannot_create_product_with_duplicate_code(): void
     {
         Product::factory()->create(['product_code' => 'DUP-001']);
-        
+
         Sanctum::actingAs($this->admin);
 
         $data = [
@@ -138,7 +138,7 @@ class ProductControllerTest extends TestCase
         // Let's rely on imports, I'll add them to the file content in the replace block?
         // No, replace replaces specific string.
         // I should use full class names in test body or check imports.
-        
+
         $productA = Product::factory()->create(['product_code' => 'A']);
         $productB = Product::factory()->create(['product_code' => 'B']);
         $materialC = \App\Models\Material::factory()->create(['material_code' => 'C']);

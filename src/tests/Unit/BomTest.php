@@ -3,10 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Bom;
-use App\Models\Product;
-use App\Models\Material;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class BomTest extends TestCase
 {
@@ -14,7 +12,7 @@ class BomTest extends TestCase
 
     public function test_bom_model_has_expected_fillable_attributes(): void
     {
-        $bom = new Bom();
+        $bom = new Bom;
         $fillable = $bom->getFillable();
 
         $this->assertContains('parent_id', $fillable);
@@ -29,13 +27,13 @@ class BomTest extends TestCase
 
     public function test_bom_has_parent_relationship(): void
     {
-        $bom = new Bom();
+        $bom = new Bom;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphTo::class, $bom->parent());
     }
 
     public function test_bom_has_child_relationship(): void
     {
-        $bom = new Bom();
+        $bom = new Bom;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphTo::class, $bom->child());
     }
 }

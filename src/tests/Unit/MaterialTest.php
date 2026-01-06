@@ -3,8 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Material;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class MaterialTest extends TestCase
 {
@@ -12,7 +12,7 @@ class MaterialTest extends TestCase
 
     public function test_material_model_has_expected_fillable_attributes(): void
     {
-        $material = new Material();
+        $material = new Material;
         $fillable = $material->getFillable();
 
         $this->assertContains('material_code', $fillable);
@@ -29,13 +29,13 @@ class MaterialTest extends TestCase
 
     public function test_material_has_usages_relationship(): void
     {
-        $material = new Material();
+        $material = new Material;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $material->usages());
     }
 
     public function test_material_has_components_relationship(): void
     {
-        $material = new Material();
+        $material = new Material;
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Relations\MorphMany::class, $material->components());
     }
 }

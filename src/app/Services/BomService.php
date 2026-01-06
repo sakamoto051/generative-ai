@@ -3,17 +3,17 @@
 namespace App\Services;
 
 use App\Models\Bom;
-use App\Models\Product;
 use App\Models\Material;
+use App\Models\Product;
 
 class BomService
 {
     /**
      * Detect if adding a relationship (Parent -> Child) would create a circular reference.
      *
-     * @param int $parentId The ID of the parent Product.
-     * @param int $childId The ID of the child (Product or Material).
-     * @param string $childType The type of the child (e.g., App\Models\Product).
+     * @param  int  $parentId  The ID of the parent Product.
+     * @param  int  $childId  The ID of the child (Product or Material).
+     * @param  string  $childType  The type of the child (e.g., App\Models\Product).
      * @return bool True if a circular reference is detected.
      */
     public function detectCircularReference(int $parentId, int $childId, string $childType = Product::class): bool
@@ -36,11 +36,6 @@ class BomService
     /**
      * Check if $potentialAncestorId is an ancestor of $descendantId.
      * Both are assumed to be Products.
-     *
-     * @param int $potentialAncestorId
-     * @param int $descendantId
-     * @param array $visited
-     * @return bool
      */
     protected function isAncestor(int $potentialAncestorId, int $descendantId, array $visited = []): bool
     {
@@ -52,8 +47,8 @@ class BomService
         // Find parents of $descendantId
         // We are looking for BOM entries where child_id = $descendantId AND child_type = Product::class
         $parents = Bom::where('child_id', $descendantId)
-                      ->where('child_type', Product::class)
-                      ->get();
+            ->where('child_type', Product::class)
+            ->get();
 
         foreach ($parents as $bom) {
             // If the parent of this descendant is the potential ancestor, we found a path.
@@ -73,11 +68,9 @@ class BomService
     /**
      * Get the fully expanded BOM tree for a product.
      *
-     * @param int $productId
-     * @param float $multiplier Cumulative quantity multiplier
-     * @param int $depth Current recursion depth
-     * @param int $maxDepth Maximum allowed depth
-     * @return array
+     * @param  float  $multiplier  Cumulative quantity multiplier
+     * @param  int  $depth  Current recursion depth
+     * @param  int  $maxDepth  Maximum allowed depth
      */
     public function getBomTree(int $productId, float $multiplier = 1.0, int $depth = 0, int $maxDepth = 10): array
     {
@@ -86,7 +79,7 @@ class BomService
         }
 
         $product = Product::find($productId);
-        if (!$product) {
+        if (! $product) {
             return [];
         }
 
@@ -98,12 +91,11 @@ class BomService
             'children' => [],
         ];
 
-        // Fetch children relationships
-        $boms = Bom::where('parent_id', $productId)
-                   ->where('parent_type', Product::class)
-                   ->with('child')
-                   ->get();
-
+                // Fetch children relationships
+                $boms = Bom::where('parent_id', $productId)
+                           ->where('parent_type', Product::class)
+                           ->with('child')
+                           ->get();
         foreach ($boms as $bom) {
             $child = $bom->child;
             if (!$child) continue;
@@ -111,7 +103,7 @@ class BomService
             $childQty = $bom->quantity;
             $cumulativeQty = $multiplier * $childQty;
 
-            if ($bom->child_type === Product::class) {
+            if ($bom->child_type === Product::class && $child instanceof Product) {
                 // Recursive call
                 $childNode = $this->getBomTree($child->id, $cumulativeQty, $depth + 1, $maxDepth);
                 
@@ -120,7 +112,7 @@ class BomService
                     $childNode['total_quantity'] = $cumulativeQty;
                     $node['children'][] = $childNode;
                 }
-            } else {
+            } elseif ($bom->child_type === Material::class && $child instanceof Material) {
                 // Material (Leaf node)
                 $node['children'][] = [
                     'id' => $child->id,

@@ -22,7 +22,7 @@ class UpdateMaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'material_code' => 'sometimes|required|string|unique:materials,material_code,' . $this->route('material')->id,
+            'material_code' => 'sometimes|required|string|unique:materials,material_code,'.$this->route('material')->id,
             'name' => 'sometimes|required|string|max:255',
             'category' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:50',

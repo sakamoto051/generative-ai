@@ -2,9 +2,8 @@
 
 namespace Tests\Integration;
 
-use App\Models\User;
-use App\Models\Role;
 use App\Models\Factory;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,10 +14,10 @@ class RouteProtectionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Seed roles
         $this->artisan('db:seed', ['--class' => 'RoleSeeder']);
-        
+
         $this->factory = Factory::create(['name' => 'Main Factory']);
     }
 
