@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductionPlanController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(ProductionPlan::class, 'production_plan');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -75,10 +80,6 @@ class ProductionPlanController extends Controller
      */
     public function destroy(ProductionPlan $productionPlan)
     {
-        if ($productionPlan->status !== 'Draft') {
-            return response()->json(['message' => 'Only draft plans can be deleted'], 403);
-        }
-
         $productionPlan->delete();
 
         return response()->json(null, 204);
@@ -86,21 +87,25 @@ class ProductionPlanController extends Controller
 
     public function submit(ProductionPlan $productionPlan)
     {
+        $this->authorize('submit', $productionPlan);
         return $this->updateStatus($productionPlan, 'Draft', 'Pending');
     }
 
     public function approve(ProductionPlan $productionPlan)
     {
+        $this->authorize('approve', $productionPlan);
         return $this->updateStatus($productionPlan, 'Pending', 'Approved');
     }
 
     public function reject(ProductionPlan $productionPlan)
     {
+        $this->authorize('reject', $productionPlan);
         return $this->updateStatus($productionPlan, 'Pending', 'Rejected');
     }
 
     public function cancel(ProductionPlan $productionPlan)
     {
+        $this->authorize('cancel', $productionPlan);
         $productionPlan->update(['status' => 'Canceled']);
         return new ProductionPlanResource($productionPlan->load('details.product'));
     }
