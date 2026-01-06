@@ -64,7 +64,11 @@ class ManufacturingOrderController extends Controller
             return response()->json(['message' => 'No new manufacturing orders were generated (already released or no details)'], 200);
         }
 
-        return MoResource::collection(collect($orders)->load(['product', 'components.item']));
+        $reloadedOrders = ManufacturingOrder::with(['product', 'components.item'])
+            ->whereIn('id', collect($orders)->pluck('id'))
+            ->get();
+
+        return MoResource::collection($reloadedOrders);
     }
 
     /**
