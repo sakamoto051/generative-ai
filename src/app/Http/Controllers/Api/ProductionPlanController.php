@@ -7,21 +7,20 @@ use App\Http\Requests\StoreProductionPlanRequest;
 use App\Http\Requests\UpdateProductionPlanRequest;
 use App\Http\Resources\ProductionPlanResource;
 use App\Models\ProductionPlan;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductionPlanController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(ProductionPlan::class, 'production_plan');
-    }
+    use AuthorizesRequests;
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', ProductionPlan::class);
         $plans = ProductionPlan::with('creator')->paginate(20);
         return ProductionPlanResource::collection($plans);
     }
@@ -31,6 +30,7 @@ class ProductionPlanController extends Controller
      */
     public function store(StoreProductionPlanRequest $request)
     {
+        $this->authorize('create', ProductionPlan::class);
         return DB::transaction(function () use ($request) {
             $plan = ProductionPlan::create(array_merge(
                 $request->validated(),
@@ -52,6 +52,7 @@ class ProductionPlanController extends Controller
      */
     public function show(ProductionPlan $productionPlan)
     {
+        $this->authorize('view', $productionPlan);
         return new ProductionPlanResource($productionPlan->load('details.product'));
     }
 
@@ -60,6 +61,7 @@ class ProductionPlanController extends Controller
      */
     public function update(UpdateProductionPlanRequest $request, ProductionPlan $productionPlan)
     {
+        $this->authorize('update', $productionPlan);
         return DB::transaction(function () use ($request, $productionPlan) {
             $productionPlan->update($request->validated());
 
@@ -80,6 +82,7 @@ class ProductionPlanController extends Controller
      */
     public function destroy(ProductionPlan $productionPlan)
     {
+        $this->authorize('delete', $productionPlan);
         $productionPlan->delete();
 
         return response()->json(null, 204);
