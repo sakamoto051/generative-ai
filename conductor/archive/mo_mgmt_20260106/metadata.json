@@ -1,0 +1,8 @@
+{
+  "track_id": "mo_mgmt_20260106",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-06T13:00:00Z",
+  "updated_at": "2026-01-06T13:00:00Z",
+  "description": "Manufacturing Order (MO) Management API"
+}
