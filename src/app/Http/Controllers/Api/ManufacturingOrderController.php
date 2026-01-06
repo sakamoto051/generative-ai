@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MoResource;
+use App\Http\Resources\ExecutionResource;
 use App\Models\ManufacturingOrder;
 use App\Models\ProductionPlan;
 use App\Services\MoService;
+use App\Services\ExecutionService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +18,12 @@ class ManufacturingOrderController extends Controller
     use AuthorizesRequests;
 
     protected MoService $moService;
+    protected ExecutionService $executionService;
 
-    public function __construct(MoService $moService)
+    public function __construct(MoService $moService, ExecutionService $executionService)
     {
         $this->moService = $moService;
+        $this->executionService = $executionService;
     }
 
     /**
@@ -37,6 +41,26 @@ class ManufacturingOrderController extends Controller
     public function show(ManufacturingOrder $manufacturingOrder)
     {
         return new MoResource($manufacturingOrder->load(['product', 'components.item']));
+    }
+
+    /**
+     * Report manufacturing progress for an order.
+     */
+    public function execute(Request $request, ManufacturingOrder $manufacturingOrder)
+    {
+        $validated = $request->validate([
+            'good_quantity' => 'required|numeric|min:0.01',
+            'scrap_quantity' => 'nullable|numeric|min:0',
+            'actual_duration' => 'nullable|integer|min:1',
+            'reported_at' => 'nullable|date',
+        ]);
+
+        $execution = $this->executionService->reportProgress($manufacturingOrder, array_merge(
+            $validated,
+            ['operator_id' => auth()->id()]
+        ));
+
+        return new ExecutionResource($execution->load('operator'));
     }
 
     /**
