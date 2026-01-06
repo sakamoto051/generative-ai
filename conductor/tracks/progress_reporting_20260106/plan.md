@@ -7,11 +7,11 @@
 - [x] タスク: 基本的なモデル保存とリレーションのユニットテスト作成 a0559a2
 - [x] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠) 528219e
 
-## フェーズ 2: 実績登録ロジック（Service層）の実装
+## フェーズ 2: 実績登録ロジック（Service層）の実装 [checkpoint: bab18ac]
 - [x] タスク: `ExecutionService` クラスの作成 4a856cc
 - [x] タスク: 実績登録時に在庫が増加し、MOステータスが更新されることを検証するユニットテスト作成 d9cb257
 - [x] タスク: `ExecutionService` での実績保存 ＋ 在庫加算 ＋ ステータス更新ロジックの実装 9c82212
-- [ ] タスク: Conductor - 手動検証 '実績登録ロジックの実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 '実績登録ロジックの実装' (workflow.mdのプロトコルに準拠) bab18ac
 
 ## フェーズ 3: API統合とレスポンス形式の構築
 - [ ] タスク: `ManufacturingOrderController` への `execute` メソッド追加および `ExecutionResource` の作成
