@@ -66,6 +66,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Production Plan routes
     Route::middleware(['role:System Administrator,Production Manager'])->group(function () {
+        Route::post('production-plans/{production_plan}/release', [\App\Http\Controllers\Api\ManufacturingOrderController::class, 'release']);
         Route::post('production-plans/{production_plan}/submit', [\App\Http\Controllers\Api\ProductionPlanController::class, 'submit']);
         Route::post('production-plans/{production_plan}/approve', [\App\Http\Controllers\Api\ProductionPlanController::class, 'approve']);
         Route::post('production-plans/{production_plan}/reject', [\App\Http\Controllers\Api\ProductionPlanController::class, 'reject']);
