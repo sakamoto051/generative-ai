@@ -182,4 +182,48 @@ class BomControllerTest extends TestCase
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['parent_type']);
     }
+
+    public function test_prevents_circular_reference_on_update(): void
+    {
+        $productA = Product::factory()->create();
+        $productB = Product::factory()->create();
+
+        // A -> B
+        $bom = Bom::create([
+            'parent_id' => $productA->id,
+            'parent_type' => Product::class,
+            'child_id' => $productB->id,
+            'child_type' => Product::class,
+            'quantity' => 1,
+        ]);
+
+        Sanctum::actingAs($this->admin);
+
+        // Try to update the BOM to be B -> A (effectively flipping it, which is weird for update, 
+        // but typically update changes quantity. 
+        // A more realistic circular update: 
+        // Existing: A -> B.
+        // Existing: B -> C.
+        // Update B -> C to be B -> A.
+        
+        $productC = Product::factory()->create();
+        
+        // B -> C
+        $bomToUpdate = Bom::create([
+            'parent_id' => $productB->id,
+            'parent_type' => Product::class,
+            'child_id' => $productC->id,
+            'child_type' => Product::class,
+            'quantity' => 1,
+        ]);
+
+        // Try to update B -> C to become B -> A.
+        $response = $this->putJson("/api/boms/{$bomToUpdate->id}", [
+            'child_id' => $productA->id,
+            'child_type' => Product::class,
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['child_id']);
+    }
 }
