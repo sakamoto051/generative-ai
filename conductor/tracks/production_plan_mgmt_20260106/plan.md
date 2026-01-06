@@ -16,6 +16,6 @@
 
 ## フェーズ 3: ステータス遷移（承認フロー）の実装
 - [x] タスク: `ProductionPlanController` にステータス遷移用エンドポイントの実装 (submit, approve, reject, cancel) a9955c0
-- [~] タスク: ロールに基づく操作制限（承認・却下は Production Manager 以上等）のための Policy 実装
-- [ ] タスク: ステータスワークフローの機能テスト作成 (Draft -> Pending -> Approved 等の遷移確認)
+- [x] タスク: ロールに基づく操作制限（承認・却下は Production Manager 以上等）のための Policy 実装 9d4ed8c
+- [~] タスク: ステータスワークフローの機能テスト作成 (Draft -> Pending -> Approved 等の遷移確認)
 - [ ] タスク: Conductor - 手動検証 'ステータス遷移（承認フロー）の実装' (workflow.mdのプロトコルに準拠)
