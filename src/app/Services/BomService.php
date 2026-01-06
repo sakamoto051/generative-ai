@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Bom;
+use App\Models\Product;
 
 class BomService
 {
@@ -11,19 +12,18 @@ class BomService
      *
      * @param int $parentId The ID of the parent Product.
      * @param int $childId The ID of the child (Product or Material).
-     * @param string $childType The type of the child ('product' or 'material').
+     * @param string $childType The type of the child (e.g., App\Models\Product).
      * @return bool True if a circular reference is detected.
      */
-    public function detectCircularReference(int $parentId, int $childId, string $childType = 'product'): bool
+    public function detectCircularReference(int $parentId, int $childId, string $childType = Product::class): bool
     {
         // 1. Direct self-reference
-        if ($parentId === $childId && $childType === 'product') {
+        if ($parentId === $childId && $childType === Product::class) {
             return true;
         }
 
-        // 2. If child is a material, it cannot be a parent (ancestor), so no cycle possible
-        // unless we strictly forbid material-material links (but parent is always product).
-        if ($childType !== 'product') {
+        // 2. If child is a material (not a Product), it cannot be a parent (ancestor)
+        if ($childType !== Product::class) {
             return false;
         }
 
@@ -49,9 +49,9 @@ class BomService
         $visited[] = $descendantId;
 
         // Find parents of $descendantId
-        // We are looking for BOM entries where child_id = $descendantId AND child_type = 'product'
+        // We are looking for BOM entries where child_id = $descendantId AND child_type = Product::class
         $parents = Bom::where('child_id', $descendantId)
-                      ->where('child_type', 'product')
+                      ->where('child_type', Product::class)
                       ->get();
 
         foreach ($parents as $bom) {

@@ -41,9 +41,9 @@ class BomServiceTest extends TestCase
 
         Bom::create([
             'parent_id' => $productA->id,
-            'parent_type' => 'product',
+            'parent_type' => Product::class,
             'child_id' => $productB->id,
-            'child_type' => 'product',
+            'child_type' => Product::class,
             'quantity' => 1,
         ]);
 
@@ -63,17 +63,17 @@ class BomServiceTest extends TestCase
 
         Bom::create([
             'parent_id' => $productA->id,
-            'parent_type' => 'product',
+            'parent_type' => Product::class,
             'child_id' => $productB->id,
-            'child_type' => 'product',
+            'child_type' => Product::class,
             'quantity' => 1,
         ]);
 
         Bom::create([
             'parent_id' => $productB->id,
-            'parent_type' => 'product',
+            'parent_type' => Product::class,
             'child_id' => $productC->id,
-            'child_type' => 'product',
+            'child_type' => Product::class,
             'quantity' => 1,
         ]);
 
@@ -93,9 +93,9 @@ class BomServiceTest extends TestCase
 
         Bom::create([
             'parent_id' => $productA->id,
-            'parent_type' => 'product',
+            'parent_type' => Product::class,
             'child_id' => $productB->id,
-            'child_type' => 'product',
+            'child_type' => Product::class,
             'quantity' => 1,
         ]);
 
@@ -111,11 +111,7 @@ class BomServiceTest extends TestCase
         // A -> A (Material) - should be false as Material cannot be parent
         $productA = Product::factory()->create();
         
-        // detectCircularReference($productA->id, $productA->id, 'material')
-        // Even if IDs match, if type is material, it's not a cycle because productA(id) is Product, child is Material.
-        // And Material cannot be ancestor. So return false.
-        
-        $isCircular = $this->bomService->detectCircularReference($productA->id, $productA->id, 'material');
+        $isCircular = $this->bomService->detectCircularReference($productA->id, $productA->id, Material::class);
         
         $this->assertFalse($isCircular, 'Should return false for material child even if ID matches parent');
     }
