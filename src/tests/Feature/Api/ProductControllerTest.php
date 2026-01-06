@@ -129,4 +129,44 @@ class ProductControllerTest extends TestCase
         $response = $this->getJson('/api/products');
         $response->assertStatus(401);
     }
+
+    public function test_can_retrieve_bom_tree(): void
+    {
+        // Need to import Bom and Material
+        // Or assume they are imported. But they are not in the original file I read.
+        // I will add full namespaces or use imports.
+        // Let's rely on imports, I'll add them to the file content in the replace block?
+        // No, replace replaces specific string.
+        // I should use full class names in test body or check imports.
+        
+        $productA = Product::factory()->create(['product_code' => 'A']);
+        $productB = Product::factory()->create(['product_code' => 'B']);
+        $materialC = \App\Models\Material::factory()->create(['material_code' => 'C']);
+
+        \App\Models\Bom::create([
+            'parent_id' => $productA->id,
+            'parent_type' => Product::class,
+            'child_id' => $productB->id,
+            'child_type' => Product::class,
+            'quantity' => 2,
+        ]);
+
+        \App\Models\Bom::create([
+            'parent_id' => $productB->id,
+            'parent_type' => Product::class,
+            'child_id' => $materialC->id,
+            'child_type' => \App\Models\Material::class,
+            'quantity' => 3,
+        ]);
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->getJson("/api/products/{$productA->id}/bom-tree");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.code', 'A')
+            ->assertJsonPath('data.children.0.code', 'B')
+            ->assertJsonPath('data.children.0.children.0.code', 'C')
+            ->assertJsonPath('data.children.0.children.0.total_quantity', 6);
+    }
 }

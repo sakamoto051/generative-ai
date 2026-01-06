@@ -60,4 +60,13 @@ class ProductController extends Controller
 
         return response()->json(null, 204);
     }
+
+    /**
+     * Get the BOM tree for the product.
+     */
+    public function bomTree(Product $product, \App\Services\BomService $bomService)
+    {
+        $tree = $bomService->getBomTree($product->id);
+        return new \App\Http\Resources\BomTreeResource($tree);
+    }
 }

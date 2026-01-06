@@ -49,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/products', [\App\Http\Controllers\Api\ProductController::class, 'index']);
     Route::get('/products/{product}', [\App\Http\Controllers\Api\ProductController::class, 'show']);
+    Route::get('/products/{product}/bom-tree', [\App\Http\Controllers\Api\ProductController::class, 'bomTree']);
     Route::get('/materials', [\App\Http\Controllers\Api\MaterialController::class, 'index']);
     Route::get('/materials/{material}', [\App\Http\Controllers\Api\MaterialController::class, 'show']);
 

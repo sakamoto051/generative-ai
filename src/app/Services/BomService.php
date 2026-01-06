@@ -92,7 +92,7 @@ class BomService
 
         $node = [
             'id' => $product->id,
-            'code' => $product->code,
+            'code' => $product->product_code,
             'name' => $product->name,
             'type' => 'product',
             'children' => [],
@@ -124,7 +124,7 @@ class BomService
                 // Material (Leaf node)
                 $node['children'][] = [
                     'id' => $child->id,
-                    'code' => $child->code,
+                    'code' => $child->material_code,
                     'name' => $child->name,
                     'type' => 'material',
                     'quantity' => $childQty,
