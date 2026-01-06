@@ -1,11 +1,11 @@
 # 実装計画: 製造指示（MO）管理API
 
-## フェーズ 1: データベーススキーマとモデルの実装
+## フェーズ 1: データベーススキーマとモデルの実装 [checkpoint: 8489b1c]
 - [x] タスク: `manufacturing_orders` と `mo_components` テーブルのマイグレーション作成 3832b8c
 - [x] タスク: `ManufacturingOrder` と `MoComponent` モデルおよびリレーションの実装 88b90a8
 - [x] タスク: テスト用の Factory 作成 975ad8d
 - [x] タスク: リレーションとステータス遷移定数のユニットテスト作成 13f6423
-- [ ] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 'データベーススキーマとモデルの実装' (workflow.mdのプロトコルに準拠) 8489b1c
 
 ## フェーズ 2: 製造指示 生成ロジック（Service層）の実装
 - [ ] タスク: `MoService` クラスの作成
