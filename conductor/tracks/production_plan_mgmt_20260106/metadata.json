@@ -1,0 +1,8 @@
+{
+  "track_id": "production_plan_mgmt_20260106",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-06T00:00:00Z",
+  "updated_at": "2026-01-06T00:00:00Z",
+  "description": "生産計画管理APIの実装（ヘッダー・明細形式、ステータス管理含む）"
+}
