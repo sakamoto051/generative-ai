@@ -163,4 +163,23 @@ class BomControllerTest extends TestCase
         $response->assertStatus(422)
             ->assertJsonValidationErrors(['child_id']); 
     }
+
+    public function test_enforces_parent_must_be_product(): void
+    {
+        $material = Material::factory()->create();
+        $childMaterial = Material::factory()->create();
+
+        Sanctum::actingAs($this->admin);
+
+        $response = $this->postJson('/api/boms', [
+            'parent_id' => $material->id,
+            'parent_type' => Material::class,
+            'child_id' => $childMaterial->id,
+            'child_type' => Material::class,
+            'quantity' => 1,
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['parent_type']);
+    }
 }
