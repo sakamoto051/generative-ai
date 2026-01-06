@@ -9,9 +9,9 @@
 
 ## フェーズ 2: 生産計画CRUD APIの実装
 - [x] タスク: バリデーション（日付妥当性、ステータス保護等）を含む `StoreProductionPlanRequest` と `UpdateProductionPlanRequest` の作成 6593597
-- [~] タスク: `ProductionPlanController` の基本メソッドの実装 (index, show, store, update, destroy)
-- [ ] タスク: APIレスポンス整形用の `ProductionPlanResource` の実装
-- [ ] タスク: CRUD操作の機能テスト作成 (明細を含む一括作成、バリデーションエラーの確認)
+- [x] タスク: `ProductionPlanController` の基本メソッドの実装 (index, show, store, update, destroy) 4ad45a9
+- [x] タスク: APIレスポンス整形用の `ProductionPlanResource` の実装 4ad45a9
+- [x] タスク: CRUD操作の機能テスト作成 (明細を含む一括作成、バリデーションエラーの確認) 4ad45a9
 - [ ] タスク: Conductor - 手動検証 '生産計画CRUD APIの実装' (workflow.mdのプロトコルに準拠)
 
 ## フェーズ 3: ステータス遷移（承認フロー）の実装
