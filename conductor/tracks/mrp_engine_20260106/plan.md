@@ -1,11 +1,11 @@
 # 実装計画: 材料所要量計算（MRP）エンジン
 
-## フェーズ 1: 在庫管理基盤の構築
+## フェーズ 1: 在庫管理基盤の構築 [checkpoint: a9db1e9]
 - [x] タスク: `inventories` テーブルのマイグレーション作成（id, item_id, item_type, quantity等） 9c7f4c3
 - [x] タスク: `Inventory` モデルの実装と `Product`/`Material` モデルとのリレーション定義 9731a82
 - [x] タスク: 在庫設定・更新用の `InventoryController` と基本APIの実装 1ced95e
 - [x] タスク: 在庫管理の基本機能に関する機能テスト（Feature Test）の作成 1ced95e
-- [ ] タスク: Conductor - 手動検証 '在庫管理基盤の構築' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 '在庫管理基盤の構築' (workflow.mdのプロトコルに準拠) a9db1e9
 
 ## フェーズ 2: MRP計算エンジンのコアロジック実装
 - [ ] タスク: 計算エンジンを管理する `MrpService` の作成
