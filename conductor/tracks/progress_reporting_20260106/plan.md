@@ -13,8 +13,8 @@
 - [x] タスク: `ExecutionService` での実績保存 ＋ 在庫加算 ＋ ステータス更新ロジックの実装 9c82212
 - [x] タスク: Conductor - 手動検証 '実績登録ロジックの実装' (workflow.mdのプロトコルに準拠) bab18ac
 
-## フェーズ 3: API統合とレスポンス形式の構築
+## フェーズ 3: API統合とレスポンス形式の構築 [checkpoint: 8d51e4b]
 - [x] タスク: `ManufacturingOrderController` への `execute` メソッド追加および `ExecutionResource` の作成 9ad35b9
 - [x] タスク: `GET /api/manufacturing-orders/{id}/executions` エンドポイントの実装 e65607f
 - [x] タスク: 権限チェックとステータス連動を網羅した機能テストの作成 a46218e
-- [ ] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠)
+- [x] タスク: Conductor - 手動検証 'API統合と管理機能の実装' (workflow.mdのプロトコルに準拠) 8d51e4b
